@@ -8,7 +8,6 @@ public:
     int defaultWidth, defaultHeight;
 
     LRE3Shader shader;
-    LRE3SpriteRenderer spriteRenderer;
 
 
 
@@ -20,7 +19,7 @@ public:
     virtual int Init()
     {
         shader.CompileShader("resources/shaders/base.vs", "resources/shaders/base.fs");
-        spriteRenderer.Init();
+        LRE3SpriteRenderer::Init();
 
         return 0;
     }
@@ -40,7 +39,7 @@ public:
 
     virtual void Render()
     {
-        spriteRenderer.DrawSolidColor(shader, glm::vec2(-.5f), glm::vec2(0.5f));
+        LRE3SpriteRenderer::DrawSolidColor(shader, glm::vec2(-.5f), glm::vec2(0.5f));
     }
 
     virtual void Shutdown()

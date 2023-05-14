@@ -1,5 +1,9 @@
 #include "lre3_sprite_renderer.h"
 
+GLuint LRE3SpriteRenderer::m_spriteVAO = 0;
+GLuint LRE3SpriteRenderer::m_spriteVBO = 0;
+GLuint LRE3SpriteRenderer::m_spriteIBO = 0;
+
 void LRE3SpriteRenderer::Init()
 {
     GLfloat data[] = {

@@ -7,11 +7,13 @@
 class LRE3SpriteRenderer
 {
 public:
-    void Init();
+    static void Init();
 
-    void DrawSolidColor(LRE3Shader& shader, glm::vec2 position=glm::vec2(0.f), glm::vec2 dimensions=glm::vec2(1.f));
+    static void DrawSolidColor(LRE3Shader& shader, glm::vec2 position=glm::vec2(0.f), glm::vec2 dimensions=glm::vec2(1.f));
 
-public:
+private:
+    LRE3SpriteRenderer() {}
+
     // Rectangle data
-    GLuint m_spriteVAO, m_spriteVBO, m_spriteIBO;
+    static GLuint m_spriteVAO, m_spriteVBO, m_spriteIBO;
 };
