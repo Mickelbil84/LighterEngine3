@@ -39,7 +39,7 @@ public:
 
     virtual void Render()
     {
-        LRE3SpriteRenderer::DrawSolidColor(shader, glm::vec2(-.5f), glm::vec2(0.5f));
+        LRE3SpriteRenderer::DrawSolidColor(shader, glm::vec2(-1.f / 2.f), glm::vec2(1.f));
     }
 
     virtual void Shutdown()
