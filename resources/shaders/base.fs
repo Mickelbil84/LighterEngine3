@@ -2,9 +2,19 @@
 
 in vec2 texCoord;
 
+uniform sampler2D textureMap;
+uniform int bUseTexture;
+uniform vec4 color;
+
 out vec4 fragColor;
 
 void main()
 {
-    fragColor = vec4(texCoord, 0.0, 1.0);
+    vec2 uv = texCoord;
+    // TODO: Handle sprite sheet
+
+    fragColor = color;
+    if (bUseTexture != 0)
+        fragColor *= texture(textureMap, uv);
+
 }

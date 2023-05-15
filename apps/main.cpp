@@ -25,6 +25,7 @@ public:
         scene.GetCamera()->SetAspectRatio((float)m_settings.windowWidth / (float)m_settings.windowHeight);
 
         scene.assets.LoadShader("S_base", "resources/shaders/base.vs", "resources/shaders/base.fs");
+        scene.assets.LoadTexture("T_demo_tilesheet", "resources/textures/demo_tilesheet.png");
 
         scene.GetCamera()->SetZoom(0.5f);
 
@@ -47,7 +48,10 @@ public:
 
     virtual void Render()
     {
-        LRE3SpriteRenderer::DrawSolidColor(scene.assets.GetShader("S_base"), glm::vec2(-1.f / 2.f), glm::vec2(1.f));
+        LRE3SpriteRenderer::DrawSolidColor(scene.assets.GetShader("S_base"), glm::vec2(-1.f / 2.f), glm::vec2(1.f), glm::vec4(0.1f));
+        LRE3SpriteRenderer::DrawTextureSprite(
+            scene.assets.GetShader("S_base"), scene.assets.GetTexture("T_demo_tilesheet"),
+            glm::vec2(0.5f, -0.5f), glm::vec2(1.f));
         scene.Render();
     }
 
