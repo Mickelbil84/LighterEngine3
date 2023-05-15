@@ -27,8 +27,8 @@ void LRE3SceneManager::Render()
     {
         LRE3Shader* shader = assets.GetShader(key);
         shader->Use();
-        // shader ->Uniform("view", GetCamera()->GetViewMatrix());
-        // shader->Uniform("projection", GetCamera()->GetProjectionMatrix());
+        shader->Uniform("view", GetCamera()->GetViewMatrix());
+        shader->Uniform("projection", GetCamera()->GetProjectionMatrix());
     }
     glViewport(0, 0, applicationSettings->windowWidth, applicationSettings->windowHeight);
     GetRoot()->Draw();
@@ -43,7 +43,12 @@ void LRE3SceneManager::Clear()
 
 void LRE3SceneManager::AddCamera(glm::vec2 position)
 {
-
+    camera = std::shared_ptr<LRE3Camera>(new LRE3Camera());
+    camera->SetPosition(position);
+    camera->SetHiddenInSceneGraph(true);
+    objectPool["camera"] = std::static_pointer_cast<LRE3Object>(camera);
+    parentLinks["camera"] = "";
+    UpdateSceneGraph();
 }
 void LRE3SceneManager::AddObject(std::string name, std::string parent)
 {
@@ -58,10 +63,10 @@ std::shared_ptr<LRE3SceneRoot> LRE3SceneManager::GetRoot() const
     return root;
 }
 
-// std::shared_ptr<LRE3Camera> GetCamera() const
-// {
-//      return camera;
-// }
+std::shared_ptr<LRE3Camera> LRE3SceneManager::GetCamera() const
+{
+     return camera;
+}
 
 std::string LRE3SceneManager::GetObjectNumberPrefix(std::string objectName)
 {

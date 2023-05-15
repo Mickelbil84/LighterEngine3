@@ -30,6 +30,7 @@ public:
     void Uniform(std::string uniformName, glm::vec2 v);
     void Uniform(std::string uniformName, glm::vec3 v);
     void Uniform(std::string uniformName, glm::vec4 v);
+    void Uniform(std::string uniformName, glm::mat3 m);
     void Uniform(std::string uniformName, glm::mat4 m);
     void Uniform(std::string uniformName, GLuint i);
     void Uniform(std::string uniformName, float i);

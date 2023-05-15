@@ -13,6 +13,7 @@
 #include "lre3_scene_root.h"
 #include "lre3_application_settings.h"
 #include "lre3_asset_manager.h"
+#include "lre3_camera.h"
 
 class LRE3SceneManager
 {
@@ -27,7 +28,7 @@ public:
     void AddObject(std::string name, std::string parent="");
 
     std::shared_ptr<LRE3SceneRoot> GetRoot() const;
-    // std::shared_ptr<LRE3Camera> GetCamera() const;
+    std::shared_ptr<LRE3Camera> GetCamera() const;
 
     // Object naming
     std::string GetObjectNumberPrefix(std::string objectName);
@@ -43,7 +44,7 @@ public:
 
 protected:
     std::shared_ptr<LRE3SceneRoot> root;
-    // std::shared_ptr<LRE3Camera> camera;
+    std::shared_ptr<LRE3Camera> camera;
 
 public:
     std::map<std::string, std::shared_ptr<LRE3Object>> objectPool;

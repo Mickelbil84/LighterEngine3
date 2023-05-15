@@ -21,9 +21,12 @@ public:
 
         scene.applicationSettings = &this->m_settings;
         scene.Init();
+        scene.AddCamera();
+        scene.GetCamera()->SetAspectRatio((float)m_settings.windowWidth / (float)m_settings.windowHeight);
 
         scene.assets.LoadShader("S_base", "resources/shaders/base.vs", "resources/shaders/base.fs");
-    
+
+        scene.GetCamera()->SetZoom(0.5f);
 
         return 0;
     }

@@ -169,6 +169,12 @@ void LRE3Shader::Uniform(std::string uniformName, glm::vec4 v)
     glUniform4f(loc, v.x, v.y, v.z, v.w);
 }
 
+void LRE3Shader::Uniform(std::string uniformName, glm::mat3 m)
+{
+    GLint loc = GetUniformLocation(uniformName);
+    glUniformMatrix3fv(loc, 1, GL_FALSE, glm::value_ptr(m));
+}
+
 void LRE3Shader::Uniform(std::string uniformName, glm::mat4 m)
 {
     GLint loc = GetUniformLocation(uniformName);
