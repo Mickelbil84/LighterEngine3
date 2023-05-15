@@ -41,11 +41,11 @@ void LRE3SceneManager::Clear()
     this->Init();
 }
 
-void LRE3SceneManager::AddCamera(glm::vec2 position = glm::vec2(0.f))
+void LRE3SceneManager::AddCamera(glm::vec2 position)
 {
 
 }
-void LRE3SceneManager::AddObject(std::string name, std::string parent="")
+void LRE3SceneManager::AddObject(std::string name, std::string parent)
 {
     std::shared_ptr<LRE3Object> obj(new LRE3Object(name));
     objectPool[name] = obj;
@@ -98,7 +98,7 @@ void LRE3SceneManager::Reparent(std::string object, std::string newParent)
     parentLinks[object] = newParent;
     UpdateSceneGraph();
 }
-std::shared_ptr<LRE3Object> LRE3SceneManager::DuplicateObject(std::shared_ptr<LRE3Object> obj, std::string parentName, bool topLevel = true)
+std::shared_ptr<LRE3Object> LRE3SceneManager::DuplicateObject(std::shared_ptr<LRE3Object> obj, std::string parentName, bool topLevel)
 {
     if (!obj) return nullptr;
     std::string newName = GetValidObjectName(obj->GetName());
@@ -116,7 +116,7 @@ std::shared_ptr<LRE3Object> LRE3SceneManager::DuplicateObject(std::shared_ptr<LR
     }
     return newObj;
 }   
-void LRE3SceneManager::DeleteObject(std::shared_ptr<LRE3Object> obj, bool topLevel = true)
+void LRE3SceneManager::DeleteObject(std::shared_ptr<LRE3Object> obj, bool topLevel)
 {
     if (!obj) return;
     for (auto child : obj->GetChildren())

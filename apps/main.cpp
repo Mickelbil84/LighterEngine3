@@ -1,15 +1,14 @@
 #include <lre3_application.h>
 #include <lre3_shader.h>
 #include <lre3_sprite_renderer.h>
+#include <lre3_scene_manager.h>
 
 class LRE3Main : public LRE3Application
 {
 public:
     int defaultWidth, defaultHeight;
 
-    LRE3Shader shader;
-
-
+    LRE3SceneManager scene;
 
     LRE3Main(LRE3ApplicationSettings settings) : LRE3Application(settings)
     {
@@ -18,8 +17,13 @@ public:
 
     virtual int Init()
     {
-        shader.CompileShader("resources/shaders/base.vs", "resources/shaders/base.fs");
         LRE3SpriteRenderer::Init();
+
+        scene.applicationSettings = &this->m_settings;
+        scene.Init();
+
+        scene.assets.LoadShader("S_base", "resources/shaders/base.vs", "resources/shaders/base.fs");
+    
 
         return 0;
     }
@@ -35,11 +39,13 @@ public:
 
     virtual void Update(double deltaTime)
     {
+        scene.GetRoot()->Update(deltaTime);
     }
 
     virtual void Render()
     {
-        LRE3SpriteRenderer::DrawSolidColor(shader, glm::vec2(-1.f / 2.f), glm::vec2(1.f));
+        LRE3SpriteRenderer::DrawSolidColor(scene.assets.GetShader("S_base"), glm::vec2(-1.f / 2.f), glm::vec2(1.f));
+        scene.Render();
     }
 
     virtual void Shutdown()

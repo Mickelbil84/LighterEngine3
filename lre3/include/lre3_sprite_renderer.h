@@ -9,7 +9,7 @@ class LRE3SpriteRenderer
 public:
     static void Init();
 
-    static void DrawSolidColor(LRE3Shader& shader, glm::vec2 position=glm::vec2(0.f), glm::vec2 dimensions=glm::vec2(1.f));
+    static void DrawSolidColor(LRE3Shader* shader, glm::vec2 position=glm::vec2(0.f), glm::vec2 dimensions=glm::vec2(1.f));
 
 private:
     LRE3SpriteRenderer() {}

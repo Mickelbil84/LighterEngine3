@@ -32,10 +32,10 @@ void LRE3SpriteRenderer::Init()
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), reinterpret_cast<void*>(indices), GL_STATIC_DRAW);
 }
 
-void LRE3SpriteRenderer::DrawSolidColor(LRE3Shader& shader, glm::vec2 position, glm::vec2 dimensions)
+void LRE3SpriteRenderer::DrawSolidColor(LRE3Shader* shader, glm::vec2 position, glm::vec2 dimensions)
 {
-    shader.Use();
-    shader.Uniform("position", position);
-    shader.Uniform("dimensions", dimensions);
+    shader->Use();
+    shader->Uniform("position", position);
+    shader->Uniform("dimensions", dimensions);
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_BYTE, NULL);
 }
