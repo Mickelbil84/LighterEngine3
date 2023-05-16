@@ -25,9 +25,13 @@ public:
         scene.GetCamera()->SetAspectRatio((float)m_settings.windowWidth / (float)m_settings.windowHeight);
 
         scene.assets.LoadShader("S_base", "resources/shaders/base.vs", "resources/shaders/base.fs");
-        scene.assets.LoadTexture("T_demo_tilesheet", "resources/textures/demo_tilesheet.png");
+        scene.assets.LoadTexture("T_penguin", "resources/textures/animals/penguin.png");
 
         scene.GetCamera()->SetZoom(0.5f);
+
+        scene.AddSpriteObject("penguin", "S_base", "T_penguin");
+        scene.GetObject("penguin")->SetRotation(0.3f);
+        scene.GetObject("penguin")->SetPosition(glm::vec2(-0.5f, -0.5f));
 
         return 0;
     }
@@ -48,10 +52,6 @@ public:
 
     virtual void Render()
     {
-        LRE3SpriteRenderer::DrawSolidColor(scene.assets.GetShader("S_base"), glm::vec2(-1.f / 2.f), glm::vec2(1.f), glm::vec4(0.1f));
-        LRE3SpriteRenderer::DrawTextureSprite(
-            scene.assets.GetShader("S_base"), scene.assets.GetTexture("T_demo_tilesheet"),
-            glm::vec2(0.5f, -0.5f), glm::vec2(1.f));
         scene.Render();
     }
 

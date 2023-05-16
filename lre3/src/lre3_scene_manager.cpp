@@ -57,6 +57,18 @@ void LRE3SceneManager::AddObject(std::string name, std::string parent)
     parentLinks[name] = parent;
     UpdateSceneGraph();
 }
+void LRE3SceneManager::AddSpriteObject(std::string name, std::string shader, std::string texture, std::string parent)
+{
+    std::shared_ptr<LRE3SpriteObject> obj(new LRE3SpriteObject(name));
+    if (texture.size() > 0)
+        obj->SetTexture(assets.GetTexture(texture));
+    else
+        obj->SetTexture(nullptr);
+    obj->SetShader(assets.GetShader(shader));
+    objectPool[name] = std::static_pointer_cast<LRE3Object>(obj);
+    parentLinks[name] = parent;
+    UpdateSceneGraph();
+}
 
 std::shared_ptr<LRE3SceneRoot> LRE3SceneManager::GetRoot() const
 {

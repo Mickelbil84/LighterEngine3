@@ -14,6 +14,7 @@
 #include "lre3_application_settings.h"
 #include "lre3_asset_manager.h"
 #include "lre3_camera.h"
+#include "lre3_sprite_object.h"
 
 class LRE3SceneManager
 {
@@ -26,6 +27,7 @@ public:
 
     void AddCamera(glm::vec2 position = glm::vec2(0.f));
     void AddObject(std::string name, std::string parent="");
+    void AddSpriteObject(std::string name, std::string shader, std::string texture, std::string parent="");
 
     std::shared_ptr<LRE3SceneRoot> GetRoot() const;
     std::shared_ptr<LRE3Camera> GetCamera() const;

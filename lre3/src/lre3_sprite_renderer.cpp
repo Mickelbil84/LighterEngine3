@@ -32,26 +32,14 @@ void LRE3SpriteRenderer::Init()
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), reinterpret_cast<void*>(indices), GL_STATIC_DRAW);
 }
 
-void LRE3SpriteRenderer::DrawSolidColor(LRE3Shader* shader, glm::vec2 position, glm::vec2 dimensions, glm::vec4 color)
+void LRE3SpriteRenderer::DrawTextureSprite(LRE3Shader* shader, LRE3Texture* texture, glm::mat3 modelMatrix, glm::vec4 color)
 {
     shader->Use();
-    shader->Uniform("position", position);
-    shader->Uniform("dimensions", dimensions);
+    shader->Uniform("model", modelMatrix);
 
-    shader->Uniform("bUseTexture", (GLuint)0);
-    shader->Uniform("color", color);
-
-    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_BYTE, NULL);
-}
-
-void LRE3SpriteRenderer::DrawTextureSprite(LRE3Shader* shader, LRE3Texture* texture, glm::vec2 position, glm::vec2 dimensions, glm::vec4 color)
-{
-    shader->Use();
-    shader->Uniform("position", position);
-    shader->Uniform("dimensions", dimensions);
-
-    texture->Use();
-    shader->Uniform("bUseTexture", (GLuint)1);
+    if (texture)
+        texture->Use();
+    shader->Uniform("bUseTexture", (GLuint)(texture != nullptr));
     shader->Uniform("textureMap", (GLuint)0);
     shader->Uniform("color", color);
 

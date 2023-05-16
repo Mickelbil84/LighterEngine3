@@ -16,12 +16,16 @@ include_directories(
 
 add_library(lre3
     src/lre3_application.cpp
-    src/lre3_shader.cpp
     src/lre3_print.cpp
+
+    src/lre3_shader.cpp
+    src/lre3_texture.cpp
+
     src/lre3_object.cpp
     src/lre3_scene_root.cpp
     src/lre3_camera.cpp
-    src/lre3_texture.cpp
+    src/lre3_sprite_object.cpp
+
     src/lre3_sprite_renderer.cpp
     src/lre3_asset_manager.cpp
     src/lre3_scene_manager.cpp
