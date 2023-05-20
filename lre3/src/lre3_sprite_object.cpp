@@ -9,7 +9,7 @@ LRE3SpriteObject::LRE3SpriteObject(std::string name) :
 
 void LRE3SpriteObject::Draw()
 {
-    LRE3SpriteRenderer::DrawTextureSprite(m_pShader, m_pTexture, GetModelMatrix(), m_color);
+    LRE3EngineSystems::Instance().GetSpriteRenderer().DrawTextureSprite(m_pShader, m_pTexture, GetModelMatrix(), m_color);
 }
 
 void LRE3SpriteObject::SetTexture(LRE3Texture* texture)

@@ -17,15 +17,13 @@ public:
 
     virtual int Init()
     {
-        LRE3SpriteRenderer::Init();
-
         scene.applicationSettings = &this->m_settings;
         scene.Init();
         scene.AddCamera();
         scene.GetCamera()->SetAspectRatio((float)m_settings.windowWidth / (float)m_settings.windowHeight);
 
         scene.assets.LoadShader("S_base", "resources/shaders/base.vs", "resources/shaders/base.fs");
-        scene.assets.LoadTexture("T_penguin", "resources/textures/animals/penguin.png");
+        scene.assets.LoadTexture("T_penguin", "resources/textures/animals/giraffe.png");
 
         scene.GetCamera()->SetZoom(0.5f);
 

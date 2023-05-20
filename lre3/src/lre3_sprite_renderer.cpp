@@ -1,11 +1,18 @@
 #include "lre3_sprite_renderer.h"
 
-GLuint LRE3SpriteRenderer::m_spriteVAO = 0;
-GLuint LRE3SpriteRenderer::m_spriteVBO = 0;
-GLuint LRE3SpriteRenderer::m_spriteIBO = 0;
+LRE3SpriteRenderer::LRE3SpriteRenderer() :
+    m_bInitialized(false),
+    m_spriteVAO(0),
+    m_spriteVBO(0),
+    m_spriteIBO(0)
+{
+}
 
 void LRE3SpriteRenderer::Init()
 {
+    // We shouls initialize only once
+    assert(!m_bInitialized);
+
     GLfloat data[] = {
         0.f, 0.f,
         0.f, 1.f,
@@ -30,6 +37,16 @@ void LRE3SpriteRenderer::Init()
     glGenBuffers(1, &m_spriteIBO);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_spriteIBO);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), reinterpret_cast<void*>(indices), GL_STATIC_DRAW);
+
+    m_bInitialized = true;
+}
+
+void LRE3SpriteRenderer::Shutdown()
+{
+    if (m_spriteIBO) glDeleteBuffers(1, &m_spriteIBO);
+    if (m_spriteVBO) glDeleteBuffers(1, &m_spriteVBO);
+    if (m_spriteVAO) glDeleteVertexArrays(1, &m_spriteVAO);
+    m_spriteIBO = m_spriteVBO = m_spriteVAO = 0;
 }
 
 void LRE3SpriteRenderer::DrawTextureSprite(LRE3Shader* shader, LRE3Texture* texture, glm::mat3 modelMatrix, glm::vec4 color)

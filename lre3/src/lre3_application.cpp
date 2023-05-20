@@ -44,6 +44,8 @@ int LRE3Application::_Init()
     m_lastInput.xrel = m_lastInput.yrel = 0;
     m_lastInput.bLeftMouseDown = false; m_lastInput.bRightMouseDown = false;
 
+    LRE3EngineSystems::Instance().InitSubsystems();
+
     return this->Init();
 }
 int LRE3Application::_Run()
@@ -118,6 +120,7 @@ int LRE3Application::_Run()
 }
 void LRE3Application::_Shutdown()
 {
+    LRE3EngineSystems::Instance().ShutdownSubsystems();
     this->Shutdown();
     SDL_GL_DeleteContext(m_glcontext);
     SDL_DestroyWindow(m_pWindow);
