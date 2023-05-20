@@ -2,10 +2,10 @@
 
 #include "lre3_sprite_renderer.h"
 
-class LRE3EngineSystems
+class LRE3EngineSubsystems
 {
 public:
-    static LRE3EngineSystems& Instance() { return g_instance; }
+    static LRE3EngineSubsystems& Instance() { return g_instance; }
 
     void InitSubsystems();
     void ShutdownSubsystems();
@@ -13,8 +13,8 @@ public:
     LRE3SpriteRenderer& GetSpriteRenderer() { return m_spriteRenderer; }
 
 private:
-    LRE3EngineSystems() {}
-    static LRE3EngineSystems g_instance;
+    LRE3EngineSubsystems() {}
+    static LRE3EngineSubsystems g_instance;
 
     // Subsystems
     LRE3SpriteRenderer m_spriteRenderer;
