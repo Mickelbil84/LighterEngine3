@@ -45,6 +45,7 @@ int LRE3Application::_Init()
     m_lastInput.bLeftMouseDown = false; m_lastInput.bRightMouseDown = false;
 
     LRE3EngineSubsystems::Instance().InitSubsystems();
+    LRE3Bind();
 
     return this->Init();
 }

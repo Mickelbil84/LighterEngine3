@@ -7,6 +7,7 @@
 #include "lre3_application_settings.h"
 #include "lre3_input.h"
 #include "lre3_engine_subsystems.h"
+#include "lre3_bindings.h"
 // #include "LRE3_physics.h"
 
 // Base abstract class for any LRE3 based application.

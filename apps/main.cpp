@@ -23,13 +23,18 @@ public:
         scene.GetCamera()->SetAspectRatio((float)m_settings.windowWidth / (float)m_settings.windowHeight);
 
         scene.assets.LoadShader("S_base", "resources/shaders/base.vs", "resources/shaders/base.fs");
-        scene.assets.LoadTexture("T_penguin", "resources/textures/animals/giraffe.png");
+        scene.assets.LoadTexture("T_penguin", "resources/textures/animals/penguin.png");
 
         scene.GetCamera()->SetZoom(0.5f);
 
         scene.AddSpriteObject("penguin", "S_base", "T_penguin");
-        scene.GetObject("penguin")->SetRotation(0.3f);
         scene.GetObject("penguin")->SetPosition(glm::vec2(-0.5f, -0.5f));
+
+        SetSceneGlobal(&scene);
+        
+        LRE3GetScriptSystem().AddDirectoryToPath("resources/scripts");
+        LRE3GetScriptSystem().DoFile("resources/scripts/test.lua");
+        // LRE3GetScriptSystem().DoString("print 'Hello World!'");
 
         return 0;
     }

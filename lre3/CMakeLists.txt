@@ -8,10 +8,12 @@ find_package(OpenGL REQUIRED)
 find_package(glm REQUIRED)
 find_package(Cereal REQUIRED)
 find_package(fmt REQUIRED)
+find_package(Lua REQUIRED)
 include_directories(
     ${SDL2_INCLUDE_DIRS} 
     ${GLEW_INCLUDE_DIRS} 
-    ${GLM_INCLUDE_DIRS} 
+    ${GLM_INCLUDE_DIRS}
+    ${LUA_INCLUDE_DIR} 
     ${PROJECT_SOURCE_DIR}/../thirdparty/include)
 
 add_library(lre3
@@ -28,8 +30,13 @@ add_library(lre3
 
     src/lre3_engine_subsystems.cpp
     src/lre3_sprite_renderer.cpp
+    src/lre3_script_system.cpp
+
     src/lre3_asset_manager.cpp
     src/lre3_scene_manager.cpp
+    src/lre3_scene_manager_binding.cpp
+
+    src/lre3_bindings.cpp
 )
 
 target_include_directories(${PROJECT_NAME} PUBLIC ${PROJECT_SOURCE_DIR}/include)
@@ -38,6 +45,7 @@ target_link_libraries(
     ${SDL2_LIBRARIES} 
     ${GLEW_LIBRARIES} 
     ${OPENGL_LIBRARIES} 
+    ${LUA_LIBRARIES} 
     GLEW::glew
     fmt::fmt
     PUBLIC
