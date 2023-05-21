@@ -64,8 +64,8 @@ void LRE3ScriptSystem::PushString(std::string str)
 void LRE3ScriptSystem::PushUserType(void* udata, std::string tname)
 {
     lua_pushlightuserdata(L, udata);
-    luaL_getmetatable(L, tname.c_str());
-    lua_setmetatable(L, -2);
+    // luaL_getmetatable(L, tname.c_str());
+    // lua_setmetatable(L, -2);
 }
 bool LRE3ScriptSystem::GetBool(int index)
 {
@@ -90,9 +90,9 @@ void LRE3ScriptSystem::SetGlobal(std::string name)
 
 int LRE3ScriptSystem::RegisterClass(std::string classname)
 {
-    luaL_newmetatable(L, classname.c_str());
-    lua_pushvalue(L, -1);
-    lua_setfield(L, -2, "__index"); // mt.__index = mt;
+    // luaL_newmetatable(L, classname.c_str());
+    // lua_pushvalue(L, -1);
+    // lua_setfield(L, -2, "__index"); // mt.__index = mt;
     return 1;
 }
 

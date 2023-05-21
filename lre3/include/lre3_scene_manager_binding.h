@@ -5,4 +5,4 @@
 
 void SetSceneGlobal(LRE3SceneManager* scene);
 
-int luaopen_LRE3SceneManager(lua_State* L);
+extern "C" int luaopen_LRE3SceneManager(lua_State* L);
