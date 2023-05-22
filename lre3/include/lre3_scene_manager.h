@@ -19,7 +19,7 @@
 class LRE3SceneManager
 {
 public:
-    LRE3AssetManager assets;
+    
     
     void Init();
     void Render();
@@ -56,6 +56,8 @@ public:
     // Use parent links to fix the scene graph
     void UpdateSceneGraph();
     void UpdateAssets();
+
+    LRE3AssetManager assets;
 
 public:
     template <class Archive>
