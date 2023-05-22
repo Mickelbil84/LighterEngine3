@@ -33,8 +33,7 @@ public:
         SetSceneGlobal(&scene);
         
         LRE3GetScriptSystem().AddDirectoryToPath("resources/scripts");
-        LRE3GetScriptSystem().DoFile("resources/scripts/test.lua");
-        // LRE3GetScriptSystem().DoString("print 'Hello World!'");
+        LRE3GetScriptSystem().DoFile("resources/scripts/test2.lua");
 
         return 0;
     }

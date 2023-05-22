@@ -2,19 +2,11 @@ Scene = require 'engine.Scene'
 Object = require 'engine.Object'
 
 penguin = Scene:get_object("penguin")
-print(penguin:get_name())
+penguin.health = 100
+penguin.damage = function (self, amount) self.health = self.health - amount end
+print(penguin.health)
+penguin:damage(10)
+print(penguin.health)
 
--- print(scene)
-
--- LRE3SceneManager = require 'LRE3SceneManager'
--- LRE3Object = require 'LRE3Object'
--- print('hi', LRE3SceneManager, LRE3Object)
-
--- obj = LRE3SceneManager.GetObject(scene, "penguin")
--- print(obj)
--- print(LRE3Object.GetName(obj))
--- -- print('hi', scene)
--- -- -- print(scene, scene.get_object)
--- -- -- obj2 = scene:get_object("penguin")
--- -- print(obj:get_name())
--- -- print(obj:get_name())
+penguin2 = Scene:get_object("penguin")
+print(penguin2.health)

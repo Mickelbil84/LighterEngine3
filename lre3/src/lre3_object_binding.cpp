@@ -3,7 +3,7 @@
 static int LRE3Object_GetName(lua_State* L);
 
 static const luaL_Reg LRE3Object_lib[] = {
-    {"GetName", LRE3Object_GetName},
+    {"get_name", LRE3Object_GetName},
     {NULL, NULL}
 };
 

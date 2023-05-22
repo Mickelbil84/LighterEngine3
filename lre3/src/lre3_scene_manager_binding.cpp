@@ -3,13 +3,13 @@
 void SetSceneGlobal(LRE3SceneManager* scene)
 {
     LRE3GetScriptSystem().PushUserType((void*) scene, "LRE3SceneManager");
-    LRE3GetScriptSystem().SetGlobal("g_scene_ptr");
+    LRE3GetScriptSystem().SetGlobal("scene");
 }
 
 static int LRE3SceneManager_GetObject(lua_State* L);
 
 static const luaL_Reg LRE3SceneManager_lib[] = {
-    {"GetObject", LRE3SceneManager_GetObject},
+    {"get_object", LRE3SceneManager_GetObject},
     {NULL, NULL}
 };
 

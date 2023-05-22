@@ -10,6 +10,7 @@
 using fmt::format;
 
 #define LUA_PRINT_ERROR(L) (luaL_error(L, "Error: %s", lua_tostring(L, -1)))
+#define LUA_BINDING_TABLE "_g_binding_table"
 
 class LRE3ScriptSystem
 {
@@ -26,7 +27,7 @@ public:
     // 
     // Binding functions
     //
-    int RegisterClass(std::string classname);
+    int RegisterClass(std::string classname, std::string baseclass="");
 
     void PushNil();
     void PushBool(bool b);
@@ -39,6 +40,8 @@ public:
     std::string GetString(int index);
     void* GetUserType(int index, std::string tname);
 
+    void ReleaseUserType(void* udata);
+
     void SetGlobal(std::string name);
 
     lua_State* GetState() const;
@@ -47,6 +50,8 @@ public:
 
 
 private:
+    int CheckUserType(void* udata, std::string tname);
+
     lua_State* L;
     bool m_bInitialized;
 };
