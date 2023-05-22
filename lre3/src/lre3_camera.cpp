@@ -1,6 +1,6 @@
 #include "lre3_camera.h"
 
-LRE3Camera::LRE3Camera() : m_zoom(1.f), m_aspectRatio(1.f)
+LRE3Camera::LRE3Camera() : LRE3Object("camera"), m_zoom(1.f), m_aspectRatio(1.f)
 {
 }
 

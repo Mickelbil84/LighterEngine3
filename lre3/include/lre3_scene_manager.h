@@ -31,6 +31,7 @@ public:
 
     std::shared_ptr<LRE3SceneRoot> GetRoot() const;
     std::shared_ptr<LRE3Camera> GetCamera() const;
+    std::shared_ptr<LRE3SpriteObject> GetSprite(std::string name);
 
     // Object naming
     std::string GetObjectNumberPrefix(std::string objectName);

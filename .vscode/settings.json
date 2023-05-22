@@ -84,7 +84,8 @@
         "source_location": "cpp",
         "utility": "cpp",
         "shared_mutex": "cpp",
-        "cinttypes": "cpp"
+        "cinttypes": "cpp",
+        "*.ipp": "cpp"
     },
     "Lua.diagnostics.globals": [
         "scene"

@@ -79,6 +79,12 @@ std::shared_ptr<LRE3Camera> LRE3SceneManager::GetCamera() const
 {
      return camera;
 }
+std::shared_ptr<LRE3SpriteObject> LRE3SceneManager::GetSprite(std::string name)
+{
+    std::shared_ptr<LRE3Object> obj = objectPool[name];
+    return std::dynamic_pointer_cast<LRE3SpriteObject>(obj);
+}
+
 
 std::string LRE3SceneManager::GetObjectNumberPrefix(std::string objectName)
 {
