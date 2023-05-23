@@ -13,7 +13,7 @@ FBIND(LRE3Camera, SetZoom)
 {
     GET_SELF(LRE3Camera);
     GET_NUMBER(zoom, 2);
-    self->SetZoom(zoom);
+    self->SetZoom((float)zoom);
     return 0;
 }
 

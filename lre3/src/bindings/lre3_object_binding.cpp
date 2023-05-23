@@ -13,7 +13,7 @@ FBIND(LRE3Object, SetRotation)
 {
     GET_SELF(LRE3Object);
     GET_NUMBER(rotation, 2);
-    self->SetRotation(rotation);
+    self->SetRotation((float)rotation);
     return 0;
 }
 FBIND(LRE3Object, SetScale)
