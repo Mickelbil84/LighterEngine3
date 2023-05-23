@@ -30,7 +30,8 @@
 #define FNAME(type, foo) type##_##foo
 #define FBIND(type, foo) static int FNAME(type, foo)(lua_State* L)
 #define LIB(type) static const luaL_Reg type##_lib[]
-#define LOPEN(type) int luaopen_##type(lua_State* L) {luaL_newlib(L, type##_lib); return 1;}
+#define LOPEN_DECLARE(type) int luaopen_##type(lua_State* L)
+#define LOPEN(type) LOPEN_DECLARE(type){luaL_newlib(L, type##_lib); return 1;}
 #define LOPEN_EMPTY(type) LIB(type) = {{NULL, NULL}}; LOPEN(type)
 
 #define REGISTER(type) do {luaL_requiref(L, #type, luaopen_##type, 1); LRE3GetScriptSystem().RegisterClass(#type);} while(0);
@@ -40,12 +41,12 @@ void LRE3Bind();
 
 void SetSceneGlobal(LRE3SceneManager* scene);
 
-int luaopen_LRE3SceneManager(lua_State* L);
-int luaopen_LRE3AssetManager(lua_State* L);
-int luaopen_LRE3Camera(lua_State* L);
-int luaopen_LRE3Input(lua_State* L);
-int luaopen_LRE3Object(lua_State* L);
-int luaopen_LRE3SceneRoot(lua_State* L);
-int luaopen_LRE3Shader(lua_State* L);
-int luaopen_LRE3SpriteObject(lua_State* L);
-int luaopen_LRE3Texture(lua_State* L);
+LOPEN_DECLARE(LRE3SceneManager);
+LOPEN_DECLARE(LRE3AssetManager);
+LOPEN_DECLARE(LRE3Camera);
+LOPEN_DECLARE(LRE3Input);
+LOPEN_DECLARE(LRE3Object);
+LOPEN_DECLARE(LRE3SceneRoot);
+LOPEN_DECLARE(LRE3Shader);
+LOPEN_DECLARE(LRE3SpriteObject);
+LOPEN_DECLARE(LRE3Texture);
