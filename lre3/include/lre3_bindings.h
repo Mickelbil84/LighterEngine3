@@ -23,7 +23,7 @@
 
 #define PUSH_NIL() LRE3GetScriptSystem().PushNil();
 #define PUSH_BOOL(b) LRE3GetScriptSystem().PushBool((b));
-#define PUSH_NUMBER(n) LRE3GetScriptSystem().PushBool((n));
+#define PUSH_NUMBER(n) LRE3GetScriptSystem().PushNumber((n));
 #define PUSH_STRING(s) LRE3GetScriptSystem().PushString((s));
 #define PUSH_UDATA(udata, type) LRE3GetScriptSystem().PushUserType((void*)(udata), #type);
 
