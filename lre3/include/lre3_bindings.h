@@ -17,8 +17,10 @@
 #define GET_BOOL(varname, idx) bool varname = LRE3GetScriptSystem().GetBool(idx);
 #define GET_NUMBER(varname, idx) double varname = LRE3GetScriptSystem().GetNumber(idx);
 #define GET_STRING(varname, idx) std::string varname = LRE3GetScriptSystem().GetString(idx);
+#define GET_STRING_OR_NIL(varname, idx) std::string varname = LRE3GetScriptSystem().GetStringOrNil(idx);
 
 #define GET_UDATA(varname, type, idx) type* varname = (type*)(LRE3GetScriptSystem().GetUserType(idx, #type));
+#define GET_UDATA_WITHTYPE(varname, type, idx) std::string actual_tname; type* varname = (type*)(LRE3GetScriptSystem().GetUserType(idx, #type, &actual_tname));
 #define GET_SELF(type) GET_UDATA(self, type, 1)
 
 #define PUSH_NIL() LRE3GetScriptSystem().PushNil();
@@ -26,6 +28,9 @@
 #define PUSH_NUMBER(n) LRE3GetScriptSystem().PushNumber((n));
 #define PUSH_STRING(s) LRE3GetScriptSystem().PushString((s));
 #define PUSH_UDATA(udata, type) LRE3GetScriptSystem().PushUserType((void*)(udata), #type);
+#define PUSH_UDATA_STR(udata, type) LRE3GetScriptSystem().PushUserType((void*)(udata), type);
+
+#define RELEASE_UDATA(udata) LRE3GetScriptSystem().ReleaseUserType((void*)(udata));
 
 #define FNAME(type, foo) type##_##foo
 #define FBIND(type, foo) static int FNAME(type, foo)(lua_State* L)
@@ -36,6 +41,9 @@
 
 #define REGISTER(type) do {luaL_requiref(L, #type, luaopen_##type, 1); LRE3GetScriptSystem().RegisterClass(#type);} while(0);
 #define REGISTER_OOP(type, base) do {luaL_requiref(L, #type, luaopen_##type, 1); LRE3GetScriptSystem().RegisterClass(#type, #base);} while(0);
+
+
+// ------------------------------------------------
 
 void LRE3Bind();
 

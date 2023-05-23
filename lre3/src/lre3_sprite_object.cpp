@@ -7,6 +7,15 @@ LRE3SpriteObject::LRE3SpriteObject(std::string name) :
 {
 }
 
+std::shared_ptr<LRE3Object> LRE3SpriteObject::Duplicate(std::string newName)
+{
+    std::shared_ptr<LRE3SpriteObject> newCopy(new LRE3SpriteObject(newName));
+    newCopy->CopyDataFromOther(this);
+    newCopy->SetTexture(this->m_pTexture);
+    newCopy->SetShader(this->m_pShader);
+    return std::dynamic_pointer_cast<LRE3Object>(newCopy);
+}
+
 void LRE3SpriteObject::Draw()
 {
     LRE3EngineSubsystems::Instance().GetSpriteRenderer().DrawTextureSprite(m_pShader, m_pTexture, GetModelMatrix(), m_color);

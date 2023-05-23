@@ -11,6 +11,8 @@ class LRE3SpriteObject : public LRE3Object
 public:
     LRE3SpriteObject(std::string name);
 
+    virtual std::shared_ptr<LRE3Object> Duplicate(std::string newName);
+
     virtual void Draw();
     void SetShader(LRE3Shader* shader);
     void SetTexture(LRE3Texture* texture);

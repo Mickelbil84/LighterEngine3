@@ -38,7 +38,8 @@ public:
     bool GetBool(int index);
     double GetNumber(int index);
     std::string GetString(int index);
-    void* GetUserType(int index, std::string tname);
+    std::string GetStringOrNil(int index);
+    void* GetUserType(int index, std::string tname, std::string* actual_tname=nullptr);
 
     void ReleaseUserType(void* udata);
 

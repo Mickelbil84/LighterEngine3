@@ -10,8 +10,50 @@ void SetSceneGlobal(LRE3SceneManager* scene)
 
 FBIND(LRE3SceneManager, AddObject)
 {
+    GET_SELF(LRE3SceneManager);
+    GET_STRING(name, 2);
+    GET_STRING_OR_NIL(parent, 3);
+    self->AddObject(name, parent);
+    PUSH_UDATA(self->GetObject(name).get(), LRE3Object);
+    return 1;
+}
+FBIND(LRE3SceneManager, AddSprite)
+{
+    GET_SELF(LRE3SceneManager);
+    GET_STRING(name, 2);
+    GET_STRING(shader, 3);
+    GET_STRING(texture, 4);
+    GET_STRING_OR_NIL(parent, 5);
+    self->AddSpriteObject(name, shader, texture, parent);
+    PUSH_UDATA(self->GetObject(name).get(), LRE3SpriteObject);
+    return 1;
+}
+
+FBIND(LRE3SceneManager, DeleteObject)
+{
+    GET_SELF(LRE3SceneManager);
+    GET_UDATA(obj, LRE3Object, 2);
+    RELEASE_UDATA(obj);
+    self->DeleteObject(self->GetObject(obj->GetName()));
     return 0;
 }
+FBIND(LRE3SceneManager, DuplicateObject)
+{
+    GET_SELF(LRE3SceneManager);
+    GET_UDATA_WITHTYPE(obj, LRE3Object, 2);
+    GET_STRING(parent, 3);
+    PUSH_UDATA_STR(self->DuplicateObject(self->GetObject(obj->GetName()), parent).get(), actual_tname);
+    return 1;
+}
+FBIND(LRE3SceneManager, Reparent)
+{
+    GET_SELF(LRE3SceneManager);
+    GET_UDATA(obj, LRE3Object, 2);
+    GET_UDATA(parent, LRE3Object, 3);
+    self->Reparent(obj->GetName(), parent->GetName());
+    return 0;
+}
+
 
 FBIND(LRE3SceneManager, GetAssets)
 {
@@ -51,10 +93,18 @@ FBIND(LRE3SceneManager, GetObject)
 }
 
 LIB(LRE3SceneManager) = {
+    {"add_object", FNAME(LRE3SceneManager, AddObject)},
+    {"add_sprite", FNAME(LRE3SceneManager, AddSprite)},
+
+    {"delete_object", FNAME(LRE3SceneManager, DeleteObject)},
+    {"duplicate_object", FNAME(LRE3SceneManager, DuplicateObject)},
+    {"reparent", FNAME(LRE3SceneManager, Reparent)},
+
     {"get_object", FNAME(LRE3SceneManager, GetObject)},
     {"get_root", FNAME(LRE3SceneManager, GetRoot)},
     {"get_sprite", FNAME(LRE3SceneManager, GetSprite)},
     {"get_camera", FNAME(LRE3SceneManager, GetCamera)},
+
     {"get_assets", FNAME(LRE3SceneManager, GetAssets)},
     {NULL, NULL}
 };

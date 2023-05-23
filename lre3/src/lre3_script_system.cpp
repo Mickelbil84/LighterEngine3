@@ -67,6 +67,12 @@ void LRE3ScriptSystem::PushString(std::string str)
 }
 void LRE3ScriptSystem::PushUserType(void* udata, std::string tname)
 {
+    if (!udata)
+    {
+        lua_pushnil(L);
+        return;
+    }
+
     lua_pushlightuserdata(L, udata);
     lua_rawget(L, LUA_REGISTRYINDEX);
     if (lua_isnil(L, -1))
@@ -98,18 +104,29 @@ std::string LRE3ScriptSystem::GetString(int index)
 {
     return std::string(lua_tostring(L, index));
 }
+std::string LRE3ScriptSystem::GetStringOrNil(int index)
+{
+    if (lua_isstring(L, index)) return GetString(index);
+    return std::string("");
+}
 int LRE3ScriptSystem::CheckUserType(void* udata, std::string tname)
 {
     // lua_getfield(L, LUA_REGISTRYINDEX, tname.c_str());
     // lua_getmetatable(L, )
     return 0;
 }
-void* LRE3ScriptSystem::GetUserType(int index, std::string tname)
+void* LRE3ScriptSystem::GetUserType(int index, std::string tname, std::string* actual_tname)
 {
-    // void* udata = lua_touserdata(L, index);
-    // if (!udata || !CheckUserType(udata, tname)) luaL_typeerror(L, index, tname.c_str());
-    // return udata;
     lua_getfield(L, LUA_REGISTRYINDEX, tname.c_str());
+
+    // Figure out the actual name
+    if (actual_tname)
+    {
+        int res = luaL_getmetafield(L, index, "__name");
+        (*actual_tname) = GetString(-1);
+        lua_pop(L, 1);
+    }
+
     lua_getmetatable(L, index);
     while (lua_istable(L, -1))
     {

@@ -1,26 +1,24 @@
 local assets = scene:get_assets()
-print(scene, assets)
-print(scene:get_root())
-print()
-
-assets:load_shader("S_base2", "resources/shaders/base.vs", "resources/shaders/base.fs")
 assets:load_texture("T_giraffe", "resources/textures/animals/giraffe.png")
 
-local camera = scene:get_camera()
-print()
-print(camera)
-print(camera, camera:get_zoom(), camera:get_name())
+-----
+
+scene:get_camera():set_zoom(0.37)
 
 local penguin = scene:get_sprite("penguin")
-penguin:set_name("giraffe")
-print()
-print(penguin, penguin:get_name())
-penguin:set_texture(assets:get_texture("T_giraffe"))
-
 local x, y = penguin:get_position()
 local r = penguin:get_rotation()
 local sx, sy = penguin:get_scale()
-print(x, y, r, sx, sy)
 penguin:set_position(x+0.1, y-0.1)
 penguin:set_rotation(r+0.3)
 penguin:set_scale(sx*0.9, sy*1.1)
+
+local giraffe = scene:add_sprite("giraffe", "S_base", "T_giraffe")
+giraffe:set_position(1.0, 0.0)
+
+local penguin2 = scene:duplicate_object(penguin, "")
+print(penguin2, penguin2:get_name())
+penguin2:set_position(x-1.5, y)
+penguin2:set_rotation(0.0)
+scene:reparent(penguin2, giraffe)
+giraffe:set_position(0.0, 0.0)
