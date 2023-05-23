@@ -1,4 +1,4 @@
-#include "bindings/lre3_asset_manager_binding.h"
+#include "lre3_bindings.h"
 
 
 static int LRE3AssetManager_LoadTexture(lua_State* L)

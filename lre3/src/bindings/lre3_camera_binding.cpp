@@ -1,4 +1,4 @@
-#include "bindings/lre3_camera_binding.h"
+#include "lre3_bindings.h"
 
 
 static int LRE3Camera_GetZoom(lua_State* L)

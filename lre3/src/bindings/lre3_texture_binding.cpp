@@ -1,4 +1,4 @@
-#include "bindings/lre3_texture_binding.h"
+#include "lre3_bindings.h"
 
 
 static const luaL_Reg LRE3Texture_lib[] = {

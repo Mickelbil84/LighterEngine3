@@ -1,4 +1,4 @@
-#include "bindings/lre3_sprite_object_binding.h"
+#include "lre3_bindings.h"
 
 
 static int LRE3SpriteObject_SetShader(lua_State* L)

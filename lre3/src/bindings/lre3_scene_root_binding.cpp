@@ -1,4 +1,5 @@
-#include "bindings/lre3_scene_root_binding.h"
+#include "lre3_bindings.h"
+
 
 static const luaL_Reg LRE3SceneRoot_lib[] = {
     {NULL, NULL}

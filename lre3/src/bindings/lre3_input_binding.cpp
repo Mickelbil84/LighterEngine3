@@ -1,4 +1,5 @@
-#include "bindings/lre3_input_binding.h"
+#include "lre3_bindings.h"
+
 
 static int LRE3Input_GetKeystate(lua_State* L)
 {

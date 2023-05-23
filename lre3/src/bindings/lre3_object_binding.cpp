@@ -1,4 +1,4 @@
-#include "bindings/lre3_object_binding.h"
+#include "lre3_bindings.h"
 
 
 static int LRE3Object_SetPosition(lua_State* L)
