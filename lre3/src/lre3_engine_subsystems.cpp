@@ -6,6 +6,8 @@ void LRE3EngineSubsystems::InitSubsystems()
 {
     m_spriteRenderer.Init();
     m_scriptSystem.Init();
+
+    deltaTime = 0.0;
 }
 
 void LRE3EngineSubsystems::ShutdownSubsystems()

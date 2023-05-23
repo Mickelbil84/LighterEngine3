@@ -20,6 +20,7 @@ void LoadScene(LRE3SceneManager& scene, std::string serializationPath)
 void LRE3SceneManager::Init()
 {
     root = std::shared_ptr<LRE3SceneRoot>(new LRE3SceneRoot());
+    root->AttachObserver(&LRE3GetScriptSystem().scriptObserver);
 }
 void LRE3SceneManager::Render()
 {
@@ -44,6 +45,7 @@ void LRE3SceneManager::Clear()
 void LRE3SceneManager::AddCamera(glm::vec2 position)
 {
     camera = std::shared_ptr<LRE3Camera>(new LRE3Camera());
+    camera->AttachObserver(&LRE3GetScriptSystem().scriptObserver);
     camera->SetPosition(position);
     camera->SetHiddenInSceneGraph(true);
     objectPool["camera"] = std::static_pointer_cast<LRE3Object>(camera);
@@ -53,6 +55,7 @@ void LRE3SceneManager::AddCamera(glm::vec2 position)
 void LRE3SceneManager::AddObject(std::string name, std::string parent)
 {
     std::shared_ptr<LRE3Object> obj(new LRE3Object(name));
+    obj->AttachObserver(&LRE3GetScriptSystem().scriptObserver);
     objectPool[name] = obj;
     parentLinks[name] = parent;
     UpdateSceneGraph();
@@ -60,6 +63,7 @@ void LRE3SceneManager::AddObject(std::string name, std::string parent)
 void LRE3SceneManager::AddSpriteObject(std::string name, std::string shader, std::string texture, std::string parent)
 {
     std::shared_ptr<LRE3SpriteObject> obj(new LRE3SpriteObject(name));
+    obj->AttachObserver(&LRE3GetScriptSystem().scriptObserver);
     if (texture.size() > 0)
         obj->SetTexture(assets.GetTexture(texture));
     else
@@ -126,6 +130,7 @@ std::shared_ptr<LRE3Object> LRE3SceneManager::DuplicateObject(std::shared_ptr<LR
     if (!obj) return nullptr;
     std::string newName = GetValidObjectName(obj->GetName());
     std::shared_ptr<LRE3Object> newObj = obj->Duplicate(newName);
+    newObj->AttachObserver(&LRE3GetScriptSystem().scriptObserver);
     if (!newObj) return nullptr;
     objectPool[newName] = newObj;
     parentLinks[newName] = parentName;

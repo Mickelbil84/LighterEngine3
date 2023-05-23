@@ -14,6 +14,8 @@ public:
     LRE3SpriteRenderer& GetSpriteRenderer() { return m_spriteRenderer; }
     LRE3ScriptSystem& GetScriptSystem() { return m_scriptSystem; }
 
+    double deltaTime;
+
 private:
     LRE3EngineSubsystems() {}
     static LRE3EngineSubsystems g_instance;

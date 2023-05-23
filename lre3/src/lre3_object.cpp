@@ -16,6 +16,7 @@ void LRE3Object::Update(double deltaTime)
 {
     UpdateLocalModelMatrix();
     UpdateGlobalModelMatrix();
+    m_eventSubject.Notify(this, LRE3_EVENT_OBJECT_UPDATE);
 }
 void LRE3Object::Draw()
 {

@@ -113,6 +113,7 @@ int LRE3Application::_Run()
         currTime = SDL_GetPerformanceCounter();
         m_deltaTime = (double)((currTime - prevTime) * 1000 / (double)SDL_GetPerformanceFrequency());
         m_deltaTime *= 0.001;
+        LRE3EngineSubsystems::Instance().deltaTime = m_deltaTime;
         if (m_deltaTime < 1.0 / (double)m_settings.maxFPS) // Cap frame rate
                 SDL_Delay(Uint32((1.0 / (double)m_settings.maxFPS - m_deltaTime) * 1000));
     }

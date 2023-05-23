@@ -18,6 +18,7 @@
 
 #include "lre3_shader.h"
 #include "lre3_utils.h"
+#include "lre3_events.h"
 
 // The most basic entity in the framework. Each element in the scene is an object.
 // An object has a local transform (which is in relation to its parent).
@@ -69,6 +70,8 @@ public:
     glm::vec2 GetGlobalPosition() const;
     float GetGlobalRotation() const;
 
+    void AttachObserver(LRE3Observer<LRE3Object>* observer) { m_eventSubject.AddObserver(observer); }
+
     template <class Archive>
     void serialize( Archive & ar )
     {
@@ -107,6 +110,11 @@ protected:
     bool m_bHiddenInSceneGraph;
     bool m_bHidden;
     bool m_bSelected; // Used to draw debug outline
+
+    ///////////////
+    // Events
+    ///////////////
+    LRE3Subject<LRE3Object> m_eventSubject;
 
 protected:
     // Updates the local model matrix of the object (based on the transform vectors)

@@ -8,10 +8,23 @@
 #include <lua.hpp>
 #include <lauxlib.h>
 
+#include "lre3_events.h"
+#include "lre3_object.h"
+
 using fmt::format;
 
 #define LUA_PRINT_ERROR(L) (luaL_error(L, "Error: %s", lua_tostring(L, -1)))
 #define LUA_BINDING_TABLE "_g_binding_table"
+
+class LRE3ScriptObserver : public LRE3Observer<LRE3Object>
+{
+public:
+    void SetState(lua_State* L);
+    virtual void OnNotify(LRE3Object* sender, LRE3EventType eventType);
+
+protected:
+    lua_State* L;
+};
 
 class LRE3ScriptSystem
 {
@@ -48,7 +61,7 @@ public:
 
     lua_State* GetState() const;
 
-
+    LRE3ScriptObserver scriptObserver;
 
 
 private:

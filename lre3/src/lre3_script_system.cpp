@@ -1,5 +1,7 @@
 #include "lre3_script_system.h"
 
+#include "lre3_engine_subsystems.h"
+
 LRE3ScriptSystem::LRE3ScriptSystem():
     m_bInitialized(false),
     L(nullptr)
@@ -18,6 +20,7 @@ void LRE3ScriptSystem::Init()
     // lua_setglobal(L, LUA_BINDING_TABLE);
 
     m_bInitialized = true;
+    scriptObserver.SetState(L);
 }
 void LRE3ScriptSystem::Shutdown()
 {
@@ -182,4 +185,34 @@ void LRE3ScriptSystem::ReleaseUserType(void* udata)
     lua_pushnil(L);
     lua_settable(L, LUA_REGISTRYINDEX);
     // lua_pop(L, 1);
+}
+
+void LRE3ScriptObserver::SetState(lua_State* L)
+{
+    this->L = L;
+}
+
+void LRE3ScriptObserver::OnNotify(LRE3Object* sender, LRE3EventType eventType)
+{
+    switch(eventType)
+    {
+    case LRE3_EVENT_OBJECT_UPDATE:
+        // Check if the sender has an 'update' method
+        lua_pushlightuserdata(L, (void*)sender);
+        lua_gettable(L, LUA_REGISTRYINDEX); // now -1 is the Lua object table
+        lua_getfield(L, -1, "update");
+        if (lua_isfunction(L, -1)) // -1 is function, -2 is obj
+        {
+            lua_pushvalue(L, -2); // -1 is obj, -2 is function
+            lua_pushnumber(L, LRE3EngineSubsystems::Instance().deltaTime); // -1 is deltaTime, -2 is obj, -3 is function
+            lua_call(L, 2, 0);
+            lua_pop(L, 1);
+        }
+        else
+            lua_pop(L, 2);
+        break;
+
+    default:
+        break;
+    }
 }
