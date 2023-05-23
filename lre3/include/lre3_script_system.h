@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <string>
+#include <cassert>
 #include <fmt/format.h>
 
 #include <lua.hpp>
