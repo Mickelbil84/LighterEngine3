@@ -49,7 +49,7 @@ void LRE3SpriteRenderer::Shutdown()
     m_spriteIBO = m_spriteVBO = m_spriteVAO = 0;
 }
 
-void LRE3SpriteRenderer::DrawTextureSprite(LRE3Shader* shader, LRE3Texture* texture, glm::mat3 modelMatrix, glm::vec4 color)
+void LRE3SpriteRenderer::DrawTextureSprite(LRE3Shader* shader, LRE3Texture* texture, glm::mat3 modelMatrix, glm::vec4 color, float depth)
 {
     shader->Use();
     shader->Uniform("model", modelMatrix);
@@ -59,6 +59,7 @@ void LRE3SpriteRenderer::DrawTextureSprite(LRE3Shader* shader, LRE3Texture* text
     shader->Uniform("bUseTexture", (GLuint)(texture != nullptr));
     shader->Uniform("textureMap", (GLuint)0);
     shader->Uniform("color", color);
+    shader->Uniform("depth", depth);
 
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_BYTE, NULL);
 }

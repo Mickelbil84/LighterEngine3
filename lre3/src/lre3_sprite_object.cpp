@@ -18,7 +18,7 @@ std::shared_ptr<LRE3Object> LRE3SpriteObject::Duplicate(std::string newName)
 
 void LRE3SpriteObject::Draw()
 {
-    LRE3EngineSubsystems::Instance().GetSpriteRenderer().DrawTextureSprite(m_pShader, m_pTexture, GetModelMatrix(), m_color);
+    LRE3EngineSubsystems::Instance().GetSpriteRenderer().DrawTextureSprite(m_pShader, m_pTexture, GetModelMatrix(), m_color, m_depth);
 }
 
 void LRE3SpriteObject::SetTexture(LRE3Texture* texture)

@@ -1,5 +1,7 @@
 #include "lre3_scene_manager.h"
 
+#include "lre3_engine_subsystems.h"
+
 void SaveScene(LRE3SceneManager& scene, std::string serializationPath)
 {
     std::ofstream fp(serializationPath, std::ofstream::out);
@@ -17,8 +19,15 @@ void LoadScene(LRE3SceneManager& scene, std::string serializationPath)
     }
 }
 
+LRE3SceneManager::LRE3SceneManager() : reorderObserver(nullptr)
+{
+}
+
 void LRE3SceneManager::Init()
 {
+    if (reorderObserver) delete reorderObserver;
+    reorderObserver = new LRE3ReorderObserver();
+    reorderObserver->SetScene(this);
     root = std::shared_ptr<LRE3SceneRoot>(new LRE3SceneRoot());
     root->AttachObserver(&LRE3GetScriptSystem().scriptObserver);
 }
@@ -32,7 +41,11 @@ void LRE3SceneManager::Render()
         shader->Uniform("projection", GetCamera()->GetProjectionMatrix());
     }
     glViewport(0, 0, applicationSettings->windowWidth, applicationSettings->windowHeight);
-    GetRoot()->Draw();
+    // GetRoot()->Draw();
+    
+    // For 2D, render by depth
+    for (auto obj : renderPool) obj->Draw();
+
 }
 void LRE3SceneManager::Clear()
 {
@@ -56,7 +69,9 @@ void LRE3SceneManager::AddObject(std::string name, std::string parent)
 {
     std::shared_ptr<LRE3Object> obj(new LRE3Object(name));
     obj->AttachObserver(&LRE3GetScriptSystem().scriptObserver);
+    obj->AttachObserver(reorderObserver);
     objectPool[name] = obj;
+    renderPool.push_back(obj);
     parentLinks[name] = parent;
     UpdateSceneGraph();
 }
@@ -64,12 +79,14 @@ void LRE3SceneManager::AddSpriteObject(std::string name, std::string shader, std
 {
     std::shared_ptr<LRE3SpriteObject> obj(new LRE3SpriteObject(name));
     obj->AttachObserver(&LRE3GetScriptSystem().scriptObserver);
+    obj->AttachObserver(reorderObserver);
     if (texture.size() > 0)
         obj->SetTexture(assets.GetTexture(texture));
     else
         obj->SetTexture(nullptr);
     obj->SetShader(assets.GetShader(shader));
     objectPool[name] = std::static_pointer_cast<LRE3Object>(obj);
+    renderPool.push_back(std::static_pointer_cast<LRE3Object>(obj));
     parentLinks[name] = parent;
     UpdateSceneGraph();
 }
@@ -131,8 +148,10 @@ std::shared_ptr<LRE3Object> LRE3SceneManager::DuplicateObject(std::shared_ptr<LR
     std::string newName = GetValidObjectName(obj->GetName());
     std::shared_ptr<LRE3Object> newObj = obj->Duplicate(newName);
     newObj->AttachObserver(&LRE3GetScriptSystem().scriptObserver);
+    newObj->AttachObserver(reorderObserver);
     if (!newObj) return nullptr;
     objectPool[newName] = newObj;
+    renderPool.push_back(newObj);
     parentLinks[newName] = parentName;
     if (newObj)
         for (auto child : obj->GetChildren())
@@ -176,5 +195,18 @@ void LRE3SceneManager::UpdateAssets()
     for (auto& [name, obj]: objectPool)
     {
         // obj->UpdateAssets(assets);
+    }
+}
+
+void LRE3SceneManager::ReorderObjectsByDepth()
+{
+    std::sort(renderPool.begin(), renderPool.end(), [](const auto& a, const auto& b) { return a->GetDepth() < b->GetDepth(); });
+}
+
+void LRE3ReorderObserver::OnNotify(LRE3Object* sender, LRE3EventType eventType)
+{
+    if (eventType == LRE3_EVENT_OBJECT_REORDER)
+    {
+        m_pScene->ReorderObjectsByDepth();
     }
 }

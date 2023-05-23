@@ -58,6 +58,8 @@ public:
     glm::vec2 GetPosition() const;
     float GetRotation() const;
     glm::vec2 GetScale() const;
+    void SetDepth(float depth);
+    float GetDepth() const;
     void SetName(std::string name);
     std::string GetName() const;
     void SetHiddenInSceneGraph(bool hidden);
@@ -90,6 +92,7 @@ protected:
     glm::vec2 m_position;
     float m_rotation;
     glm::vec2 m_scale;
+    float m_depth;
 
     glm::vec2 m_globalPosition;
     float m_globalRotation;

@@ -2,7 +2,7 @@
 
 LRE3Object::LRE3Object(std::string name, glm::vec2 position, float rotation, glm::vec2 scale) :
     m_name(name),
-    m_position(position), m_rotation(rotation), m_scale(scale),
+    m_position(position), m_rotation(rotation), m_scale(scale), m_depth(0.f),
     m_pParent(nullptr),
     m_bHiddenInSceneGraph(false),
     m_bHidden(false),
@@ -177,4 +177,14 @@ glm::vec2 LRE3Object::GetGlobalPosition() const
 float LRE3Object::GetGlobalRotation() const
 {
     return 0.f;
+}
+
+void LRE3Object::SetDepth(float depth)
+{
+    m_depth = depth;
+    m_eventSubject.Notify(this, LRE3_EVENT_OBJECT_REORDER);
+}
+float LRE3Object::GetDepth() const
+{
+    return m_depth;
 }

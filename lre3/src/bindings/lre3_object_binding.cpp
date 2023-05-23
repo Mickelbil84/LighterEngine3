@@ -24,6 +24,13 @@ FBIND(LRE3Object, SetScale)
     self->SetScale(glm::vec2(x,y));
     return 0;
 }
+FBIND(LRE3Object, SetDepth)
+{
+    GET_SELF(LRE3Object);
+    GET_NUMBER(depth, 2);
+    self->SetDepth((float)depth);
+    return 0;
+}
 FBIND(LRE3Object, GetPosition)
 {
     GET_SELF(LRE3Object);
@@ -45,6 +52,12 @@ FBIND(LRE3Object, GetScale)
     PUSH_NUMBER(scale.x);
     PUSH_NUMBER(scale.y);
     return 2;
+}
+FBIND(LRE3Object, GetDepth)
+{
+    GET_SELF(LRE3Object);
+    PUSH_NUMBER(self->GetDepth());
+    return 1;
 }
 FBIND(LRE3Object, SetName)
 {
@@ -103,15 +116,22 @@ LIB(LRE3Object) = {
     {"set_position", FNAME(LRE3Object,SetPosition)},
     {"set_rotation", FNAME(LRE3Object,SetRotation)},
     {"set_scale", FNAME(LRE3Object,SetScale)},
+    {"set_depth", FNAME(LRE3Object,SetDepth)},
+
     {"get_position", FNAME(LRE3Object,GetPosition)},
     {"get_rotation", FNAME(LRE3Object,GetRotation)},
     {"get_scale", FNAME(LRE3Object,GetScale)},
+    {"get_depth", FNAME(LRE3Object,GetDepth)},
+
     {"set_name", FNAME(LRE3Object,SetName)},
     {"get_name", FNAME(LRE3Object,GetName)},
+
     {"set_hidden_in_scene_graph", FNAME(LRE3Object,SetHiddenInSceneGraph)},
     {"get_hidden_in_scene_graph", FNAME(LRE3Object,GetHiddenInSceneGraph)},
+
     {"set_hidden", FNAME(LRE3Object,SetHidden)},
     {"get_hidden", FNAME(LRE3Object,GetHidden)},
+    
     {"set_selected", FNAME(LRE3Object,SetSelected)},
     {"get_selected", FNAME(LRE3Object,GetSelected)},
     {NULL, NULL}

@@ -3,6 +3,7 @@
 #include <map>
 #include <vector>
 #include <memory>
+#include <algorithm>
 #include <fstream>
 
 #include <cereal/types/memory.hpp>
@@ -16,10 +17,12 @@
 #include "lre3_camera.h"
 #include "lre3_sprite_object.h"
 
+class LRE3ReorderObserver;
+
 class LRE3SceneManager
 {
 public:
-    
+    LRE3SceneManager();
     
     void Init();
     void Render();
@@ -33,6 +36,8 @@ public:
     std::shared_ptr<LRE3Camera> GetCamera() const;
     std::shared_ptr<LRE3SpriteObject> GetSprite(std::string name);
 
+    void ReorderObjectsByDepth();
+
     // Object naming
     std::string GetObjectNumberPrefix(std::string objectName);
     int GetObjectNumberSuffix(std::string objectName);
@@ -45,6 +50,8 @@ public:
 
     LRE3ApplicationSettings* applicationSettings;
 
+    LRE3ReorderObserver* reorderObserver;
+
 protected:
     std::shared_ptr<LRE3SceneRoot> root;
     std::shared_ptr<LRE3Camera> camera;
@@ -52,6 +59,7 @@ protected:
 public:
     std::map<std::string, std::shared_ptr<LRE3Object>> objectPool;
     std::map<std::string, std::string> parentLinks;
+    std::vector<std::shared_ptr<LRE3Object>> renderPool;
 
 public:
     // Use parent links to fix the scene graph
@@ -76,6 +84,16 @@ public:
         UpdateSceneGraph();
         UpdateAssets();
     }
+};
+
+class LRE3ReorderObserver : public LRE3Observer<LRE3Object>
+{
+public:
+    void SetScene(LRE3SceneManager* scene) {m_pScene = scene;}
+    virtual void OnNotify(LRE3Object* sender, LRE3EventType eventType);
+
+protected:
+    LRE3SceneManager* m_pScene;
 };
 
 void SaveScene(LRE3SceneManager& scene, std::string serializationPath);

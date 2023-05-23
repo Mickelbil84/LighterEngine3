@@ -6,6 +6,8 @@ enum LRE3EventType
 {
     LRE3_EVENT_OBJECT_INIT,
     LRE3_EVENT_OBJECT_UPDATE,
+
+    LRE3_EVENT_OBJECT_REORDER,
 };
 
 template <typename T>

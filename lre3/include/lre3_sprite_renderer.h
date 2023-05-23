@@ -13,7 +13,7 @@ public:
     void Shutdown();
 
     void DrawTextureSprite(LRE3Shader* shader, LRE3Texture* texture,
-        glm::mat3 modelMatrix=glm::mat3(1.f), glm::vec4 color=glm::vec4(1.f));
+        glm::mat3 modelMatrix=glm::mat3(1.f), glm::vec4 color=glm::vec4(1.f), float depth=0.f);
 
 private:
     // Rectangle data
