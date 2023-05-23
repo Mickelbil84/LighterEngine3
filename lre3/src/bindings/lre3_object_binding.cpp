@@ -1,6 +1,28 @@
 #include "lre3_bindings.h"
 
-
+FBIND(LRE3Object, AddPosition)
+{
+    GET_SELF(LRE3Object);
+    GET_NUMBER(x, 2);
+    GET_NUMBER(y, 3);
+    self->SetPosition(self->GetPosition() + glm::vec2(x,y));
+    return 0;
+}
+FBIND(LRE3Object, AddRotation)
+{
+    GET_SELF(LRE3Object);
+    GET_NUMBER(rotation, 2);
+    self->SetRotation(self->GetRotation() + (float)rotation);
+    return 0;
+}
+FBIND(LRE3Object, AddScale)
+{
+    GET_SELF(LRE3Object);
+    GET_NUMBER(x, 2);
+    GET_NUMBER(y, 3);
+    self->SetScale(self->GetScale() + glm::vec2(x,y));
+    return 0;
+}
 FBIND(LRE3Object, SetPosition)
 {
     GET_SELF(LRE3Object);
@@ -113,6 +135,10 @@ FBIND(LRE3Object, GetSelected)
 }
 
 LIB(LRE3Object) = {
+    {"add_position", FNAME(LRE3Object,AddPosition)},
+    {"add_rotation", FNAME(LRE3Object,AddRotation)},
+    {"add_scale", FNAME(LRE3Object,AddScale)},
+
     {"set_position", FNAME(LRE3Object,SetPosition)},
     {"set_rotation", FNAME(LRE3Object,SetRotation)},
     {"set_scale", FNAME(LRE3Object,SetScale)},

@@ -1,5 +1,7 @@
 #pragma once 
 
+#include "lre3_input.h"
+
 #include "lre3_sprite_renderer.h"
 #include "lre3_script_system.h"
 
@@ -15,6 +17,8 @@ public:
     LRE3ScriptSystem& GetScriptSystem() { return m_scriptSystem; }
 
     double deltaTime;
+    LRE3Input input;
+
 
 private:
     LRE3EngineSubsystems() {}

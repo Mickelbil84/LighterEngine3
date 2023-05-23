@@ -42,12 +42,15 @@
 #define REGISTER(type) do {luaL_requiref(L, #type, luaopen_##type, 1); LRE3GetScriptSystem().RegisterClass(#type);} while(0);
 #define REGISTER_OOP(type, base) do {luaL_requiref(L, #type, luaopen_##type, 1); LRE3GetScriptSystem().RegisterClass(#type, #base);} while(0);
 
+#define ADD_SCANCODE(name, scancode) {LRE3GetScriptSystem().PushNumber(scancode); LRE3GetScriptSystem().SetGlobal(name); }
+
 
 // ------------------------------------------------
 
 void LRE3Bind();
 
 void SetSceneGlobal(LRE3SceneManager* scene);
+void AddScancodeGlobals();
 
 LOPEN_DECLARE(LRE3SceneManager);
 LOPEN_DECLARE(LRE3AssetManager);

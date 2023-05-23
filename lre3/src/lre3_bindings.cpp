@@ -3,7 +3,9 @@
 void LRE3Bind()
 {
     lua_State* L = LRE3GetScriptSystem().GetState();
+    AddScancodeGlobals();
 
+    REGISTER(LRE3Input);
     REGISTER(LRE3SceneManager);
     REGISTER(LRE3AssetManager);
 

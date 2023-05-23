@@ -59,9 +59,9 @@ int LRE3Application::_Run()
         * Process the event queue
         */
         SDL_Event e;
-        LRE3Input input;
-        input.xrel = 0; input.yrel  = 0;
-        input.bLeftMouseDown = m_lastInput.bLeftMouseDown; input.bRightMouseDown = m_lastInput.bRightMouseDown;
+        LRE3Input* input = &LRE3EngineSubsystems::Instance().input;
+        input->xrel = 0; input->yrel  = 0;
+        input->bLeftMouseDown = m_lastInput.bLeftMouseDown; input->bRightMouseDown = m_lastInput.bRightMouseDown;
         while (SDL_PollEvent(&e))
         {
             if (e.type == SDL_QUIT)
@@ -71,22 +71,22 @@ int LRE3Application::_Run()
             if (e.type == SDL_MOUSEBUTTONDOWN)
             {
                 if (e.button.button == SDL_BUTTON_LEFT)
-                    input.bLeftMouseDown = true;
+                    input->bLeftMouseDown = true;
                 if (e.button.button == SDL_BUTTON_RIGHT)
-                    input.bRightMouseDown = true;
+                    input->bRightMouseDown = true;
             }
             if (e.type == SDL_MOUSEBUTTONUP)
             {
                 if (e.button.button == SDL_BUTTON_LEFT)
-                    input.bLeftMouseDown = false;
+                    input->bLeftMouseDown = false;
                 if (e.button.button == SDL_BUTTON_RIGHT)
-                    input.bRightMouseDown = false;
+                    input->bRightMouseDown = false;
             }
         }
-        SDL_GetRelativeMouseState(&input.xrel, &input.yrel);
-        input.keyboard = SDL_GetKeyboardState(NULL);
-        this->HandleInput(input);
-        m_lastInput = input;
+        SDL_GetRelativeMouseState(&input->xrel, &input->yrel);
+        input->keyboard = SDL_GetKeyboardState(NULL);
+        this->HandleInput(*input);
+        m_lastInput = *input;
 
         /*
         * Update application logic
