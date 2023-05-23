@@ -36,6 +36,15 @@ add_library(lre3
     src/lre3_scene_manager.cpp
 
     src/lre3_bindings.cpp
+    src/bindings/lre3_asset_manager_binding.cpp
+    src/bindings/lre3_camera_binding.cpp
+    src/bindings/lre3_input_binding.cpp
+    src/bindings/lre3_object_binding.cpp
+    src/bindings/lre3_scene_manager_binding.cpp
+    src/bindings/lre3_scene_root_binding.cpp
+    src/bindings/lre3_shader_binding.cpp
+    src/bindings/lre3_sprite_object_binding.cpp
+    src/bindings/lre3_texture_binding.cpp
 )
 
 target_include_directories(${PROJECT_NAME} PUBLIC ${PROJECT_SOURCE_DIR}/include)
