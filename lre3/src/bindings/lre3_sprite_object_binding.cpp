@@ -1,7 +1,7 @@
 #include "lre3_bindings.h"
 
 
-static int LRE3SpriteObject_SetShader(lua_State* L)
+FBIND(LRE3SpriteObject, SetShader)
 {   
     GET_SELF(LRE3SpriteObject);
     GET_UDATA(shader, LRE3Shader, 2);
@@ -9,7 +9,7 @@ static int LRE3SpriteObject_SetShader(lua_State* L)
     return 0;
 }
 
-static int LRE3SpriteObject_SetTexture(lua_State* L)
+FBIND(LRE3SpriteObject, SetTexture)
 {
     GET_SELF(LRE3SpriteObject);
     GET_UDATA(texture, LRE3Texture, 2);
@@ -17,13 +17,9 @@ static int LRE3SpriteObject_SetTexture(lua_State* L)
     return 0;
 }
 
-static const luaL_Reg LRE3SpriteObject_lib[] = {
-    {"set_shader", LRE3SpriteObject_SetShader},
-    {"set_texture", LRE3SpriteObject_SetTexture},
+LIB(LRE3SpriteObject) = {
+    {"set_shader", FNAME(LRE3SpriteObject, SetShader)},
+    {"set_texture", FNAME(LRE3SpriteObject, SetTexture)},
     {NULL, NULL}
 };
-int luaopen_LRE3SpriteObject(lua_State* L)
-{
-    luaL_newlib(L, LRE3SpriteObject_lib);
-    return 1;
-}
+LOPEN(LRE3SpriteObject)

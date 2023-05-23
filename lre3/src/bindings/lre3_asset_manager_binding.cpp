@@ -1,7 +1,7 @@
 #include "lre3_bindings.h"
 
 
-static int LRE3AssetManager_LoadTexture(lua_State* L)
+FBIND(LRE3AssetManager, LoadTexture)
 {
     GET_SELF(LRE3AssetManager);
     GET_STRING(name, 2);
@@ -9,14 +9,14 @@ static int LRE3AssetManager_LoadTexture(lua_State* L)
     self->LoadTexture(name, path);
     return 0;
 }
-static int LRE3AssetManager_GetTexture(lua_State* L)
+FBIND(LRE3AssetManager, GetTexture)
 {
     GET_SELF(LRE3AssetManager);
     GET_STRING(name, 2);
     PUSH_UDATA(self->GetTexture(name), LRE3Texture);
     return 1;
 }
-static int LRE3AssetManager_LoadShader(lua_State* L)
+FBIND(LRE3AssetManager, LoadShader)
 {
     GET_SELF(LRE3AssetManager);
     GET_STRING(name, 2);
@@ -25,7 +25,7 @@ static int LRE3AssetManager_LoadShader(lua_State* L)
     self->LoadShader(name, vs_path, fs_path);
     return 0;
 }
-static int LRE3AssetManager_GetShader(lua_State* L)
+FBIND(LRE3AssetManager, GetShader)
 {
     GET_SELF(LRE3AssetManager);
     GET_STRING(name, 2);
@@ -33,15 +33,12 @@ static int LRE3AssetManager_GetShader(lua_State* L)
     return 1;
 }
 
-static const luaL_Reg LRE3AssetManager_lib[] = {
-    {"load_texture", LRE3AssetManager_LoadTexture},
-    {"get_texture", LRE3AssetManager_GetTexture},
-    {"load_shader", LRE3AssetManager_LoadShader},
-    {"get_shader", LRE3AssetManager_GetShader},
+LIB(LRE3AssetManager) = {
+    {"load_texture", FNAME(LRE3AssetManager, LoadTexture)},
+    {"get_texture", FNAME(LRE3AssetManager, GetTexture)},
+    {"load_shader", FNAME(LRE3AssetManager, LoadShader)},
+    {"get_shader", FNAME(LRE3AssetManager, GetShader)},
     {NULL, NULL}
 };
-int luaopen_LRE3AssetManager(lua_State* L)
-{
-    luaL_newlib(L, LRE3AssetManager_lib);
-    return 1;
-}
+
+LOPEN(LRE3AssetManager);

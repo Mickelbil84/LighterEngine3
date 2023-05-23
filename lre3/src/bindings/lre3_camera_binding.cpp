@@ -1,7 +1,7 @@
 #include "lre3_bindings.h"
 
 
-static int LRE3Camera_GetZoom(lua_State* L)
+FBIND(LRE3Camera, GetZoom)
 {
     GET_SELF(LRE3Camera);
     double zoom = self->GetZoom();
@@ -9,7 +9,7 @@ static int LRE3Camera_GetZoom(lua_State* L)
     return 1;
 }
 
-static int LRE3Camera_SetZoom(lua_State* L)
+FBIND(LRE3Camera, SetZoom)
 {
     GET_SELF(LRE3Camera);
     GET_NUMBER(zoom, 2);
@@ -17,13 +17,9 @@ static int LRE3Camera_SetZoom(lua_State* L)
     return 0;
 }
 
-static const luaL_Reg LRE3Camera_lib[] = {
-    {"get_zoom", LRE3Camera_GetZoom},
-    {"set_zoom", LRE3Camera_SetZoom},
+LIB(LRE3Camera) = {
+    {"get_zoom", FNAME(LRE3Camera, GetZoom)},
+    {"set_zoom", FNAME(LRE3Camera, SetZoom)},
     {NULL, NULL}
 };
-int luaopen_LRE3Camera(lua_State* L)
-{
-    luaL_newlib(L, LRE3Camera_lib);
-    return 1;
-}
+LOPEN(LRE3Camera)

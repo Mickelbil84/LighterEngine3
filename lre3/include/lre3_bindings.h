@@ -27,6 +27,12 @@
 #define PUSH_STRING(s) LRE3GetScriptSystem().PushString((s));
 #define PUSH_UDATA(udata, type) LRE3GetScriptSystem().PushUserType((void*)(udata), #type);
 
+#define FNAME(type, foo) type##_##foo
+#define FBIND(type, foo) static int FNAME(type, foo)(lua_State* L)
+#define LIB(type) static const luaL_Reg type##_lib[]
+#define LOPEN(type) int luaopen_##type(lua_State* L) {luaL_newlib(L, type##_lib); return 1;}
+#define LOPEN_EMPTY(type) LIB(type) = {{NULL, NULL}}; LOPEN(type)
+
 #define REGISTER(type) do {luaL_requiref(L, #type, luaopen_##type, 1); LRE3GetScriptSystem().RegisterClass(#type);} while(0);
 #define REGISTER_OOP(type, base) do {luaL_requiref(L, #type, luaopen_##type, 1); LRE3GetScriptSystem().RegisterClass(#type, #base);} while(0);
 

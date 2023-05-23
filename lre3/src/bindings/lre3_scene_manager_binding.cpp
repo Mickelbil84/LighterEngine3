@@ -6,22 +6,28 @@ void SetSceneGlobal(LRE3SceneManager* scene)
     LRE3GetScriptSystem().PushUserType((void*) scene, "LRE3SceneManager");
     LRE3GetScriptSystem().SetGlobal("scene");
 }
+/////////////////////////////////////////////////////////////////////////////////
 
-static int LRE3SceneManager_GetAssets(lua_State* L)
+FBIND(LRE3SceneManager, AddObject)
+{
+    return 0;
+}
+
+FBIND(LRE3SceneManager, GetAssets)
 {
     GET_SELF(LRE3SceneManager);
     PUSH_UDATA(&(self->assets), LRE3AssetManager);
     return 1;
 }
 
-static int LRE3SceneManager_GetCamera(lua_State* L)
+FBIND(LRE3SceneManager, GetCamera)
 {
     GET_SELF(LRE3SceneManager);
     PUSH_UDATA(self->GetCamera().get(), LRE3Camera);
     return 1;
 }
 
-static int LRE3SceneManager_GetSprite(lua_State* L)
+FBIND(LRE3SceneManager, GetSprite)
 {
     GET_SELF(LRE3SceneManager);
     GET_STRING(name, 2);
@@ -29,14 +35,14 @@ static int LRE3SceneManager_GetSprite(lua_State* L)
     return 1;
 }
 
-static int LRE3SceneManager_GetRoot(lua_State* L)
+FBIND(LRE3SceneManager, GetRoot)
 {
     GET_SELF(LRE3SceneManager);
     PUSH_UDATA(self->GetRoot().get(), LRE3SceneRoot);
     return 1;
 }
 
-static int LRE3SceneManager_GetObject(lua_State* L)
+FBIND(LRE3SceneManager, GetObject)
 {
     GET_SELF(LRE3SceneManager);
     GET_STRING(name, 2);
@@ -44,17 +50,13 @@ static int LRE3SceneManager_GetObject(lua_State* L)
     return 1;
 }
 
-static const luaL_Reg LRE3SceneManager_lib[] = {
-    {"get_object", LRE3SceneManager_GetObject},
-    {"get_root", LRE3SceneManager_GetRoot},
-    {"get_sprite", LRE3SceneManager_GetSprite},
-    {"get_camera", LRE3SceneManager_GetCamera},
-    {"get_assets", LRE3SceneManager_GetAssets},
+LIB(LRE3SceneManager) = {
+    {"get_object", FNAME(LRE3SceneManager, GetObject)},
+    {"get_root", FNAME(LRE3SceneManager, GetRoot)},
+    {"get_sprite", FNAME(LRE3SceneManager, GetSprite)},
+    {"get_camera", FNAME(LRE3SceneManager, GetCamera)},
+    {"get_assets", FNAME(LRE3SceneManager, GetAssets)},
     {NULL, NULL}
 };
 
-int luaopen_LRE3SceneManager(lua_State* L)
-{
-    luaL_newlib(L, LRE3SceneManager_lib);
-    return 1;
-}
+LOPEN(LRE3SceneManager)
