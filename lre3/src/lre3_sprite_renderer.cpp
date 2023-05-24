@@ -58,8 +58,47 @@ void LRE3SpriteRenderer::DrawTextureSprite(LRE3Shader* shader, LRE3Texture* text
         texture->Use();
     shader->Uniform("bUseTexture", (GLuint)(texture != nullptr));
     shader->Uniform("textureMap", (GLuint)0);
+    shader->Uniform("textureRows", (GLuint)1);
+    shader->Uniform("textureCols", (GLuint)1);
+    shader->Uniform("tileRow", (GLuint)0);
+    shader->Uniform("tileCol", (GLuint)0);
+    shader->Uniform("deltaRow", (GLuint)0);
+    shader->Uniform("deltaCol", (GLuint)0);
+    shader->Uniform("spriteRows", (GLuint)1);
+    shader->Uniform("spriteCols", (GLuint)1);
     shader->Uniform("color", color);
     shader->Uniform("depth", depth);
 
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_BYTE, NULL);
+}
+
+void LRE3SpriteRenderer::DrawTextureAtlas(LRE3Shader* shader, LRE3Texture* texture, 
+        std::vector<unsigned int> tiles, unsigned int nRows, unsigned int nCols,
+        glm::mat3 modelMatrix, glm::vec4 color, float depth)
+{
+    shader->Use();
+    shader->Uniform("model", modelMatrix);
+
+    if (texture)
+        texture->Use();
+    shader->Uniform("bUseTexture", (GLuint)(texture != nullptr));
+    shader->Uniform("textureMap", (GLuint)0);
+    shader->Uniform("textureRows", (GLuint)texture->GetAtlasRows());
+    shader->Uniform("textureCols", (GLuint)texture->GetAtlasCols());
+    shader->Uniform("spriteRows", (GLuint)nRows);
+    shader->Uniform("spriteCols", (GLuint)nCols);
+    shader->Uniform("color", color);
+    shader->Uniform("depth", depth);
+
+    for (int i = 0; i < nRows; i++)
+    for (int j = 0; j < nCols; j++)
+    {
+        unsigned int tile = tiles[j + i * nRows];
+        shader->Uniform("tileRow", tile / (GLuint)texture->GetAtlasCols());
+        shader->Uniform("tileCol", tile % (GLuint)texture->GetAtlasCols());
+        shader->Uniform("deltaRow", (GLuint)i);
+        shader->Uniform("deltaCol", (GLuint)j);
+        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_BYTE, NULL);
+    }
+    
 }

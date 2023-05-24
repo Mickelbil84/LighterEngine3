@@ -12,7 +12,7 @@ using fmt::print;
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
 
-void LRE3Texture::Load(std::string filePath)
+void LRE3Texture::Load(std::string filePath, unsigned int nRows, unsigned int nCols)
 {
     // First load the data
     int x, y, n;
@@ -48,6 +48,9 @@ void LRE3Texture::Load(std::string filePath)
     glGenerateMipmap(GL_TEXTURE_2D);
 
     stbi_image_free(data);
+
+    m_nRows = nRows;
+    m_nCols = nCols;
 }
 
 void LRE3Texture::Use(GLuint activeTexture)

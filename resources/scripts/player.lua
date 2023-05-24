@@ -23,7 +23,7 @@ function Player:update(delta_time)
     self.frame_time = self.frame_time + delta_time
     if self.frame_cnt == 500 then
         local avg_time = self.frame_time / self.frame_cnt
-        print("FPS:", math.ceil(1 / avg_time))
+        -- print("FPS:", math.ceil(1 / avg_time))
         self.frame_cnt = 0
         self.frame_time = 0
     end

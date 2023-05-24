@@ -1,6 +1,6 @@
 #include "lre3_asset_manager.h"
 
-LRE3AssetPath::LRE3AssetPath() :
+LRE3TexturePath::LRE3TexturePath() :
     path(""),
     bIsLoaded(false)
 {
@@ -22,27 +22,28 @@ void LRE3AssetManager::Clear()
     m_textures.clear();
 }
 
-void LRE3AssetManager::AddTexturePath(std::string name, std::string texturePath)
+void LRE3AssetManager::AddTexturePath(std::string name, std::string texturePath, unsigned int nRows, unsigned int nCols)
 {
-    LRE3AssetPath ap;
+    LRE3TexturePath ap;
     ap.path = texturePath;
+    ap.nRows =nRows; ap.nCols = nCols;
     ap.bIsLoaded = false;
     m_texturesPaths[name] = ap;
 }
-void LRE3AssetManager::LoadTexture(std::string name, std::string texturePath)
+void LRE3AssetManager::LoadTexture(std::string name, std::string texturePath, unsigned int nRows, unsigned int nCols)
 {
     LRE3Texture texture;
-    texture.Load(texturePath);
+    texture.Load(texturePath, nRows, nCols);
     texture.SetName(name);
     m_textures[name] = texture;
-    AddTexturePath(name, texturePath);
+    AddTexturePath(name, texturePath, nRows, nCols);
     m_texturesPaths[name].bIsLoaded = true;
 }
 LRE3Texture* LRE3AssetManager::GetTexture(std::string name)
 {
     if (!name.size())
         return nullptr;
-    LRE3AssetPath& ap = m_texturesPaths[name];
+    LRE3TexturePath& ap = m_texturesPaths[name];
     if (!ap.bIsLoaded)
     {
         LoadTexture(name, ap.path);
@@ -50,6 +51,12 @@ LRE3Texture* LRE3AssetManager::GetTexture(std::string name)
     }
 
     return &m_textures[name];
+}
+void LRE3AssetManager::SetTextureAtlasSize(std::string name, unsigned int nRows, unsigned int nCols)
+{
+    LRE3TexturePath& ap = m_texturesPaths[name];
+    ap.nRows = nRows; ap.nCols = nCols;
+    m_textures[name].SetAtlasSize(nRows, nCols);
 }
 
 void LRE3AssetManager::AddShaderPath(std::string name, std::string vertexShaderPath, std::string fragmentShaderPath)

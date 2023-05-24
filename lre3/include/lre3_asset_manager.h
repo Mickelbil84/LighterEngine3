@@ -12,17 +12,19 @@
 #include "lre3_texture.h"
 
 
-struct LRE3AssetPath
+struct LRE3TexturePath
 {
-    LRE3AssetPath();
+    LRE3TexturePath();
 
     std::string path;
     bool bIsLoaded;
+    unsigned int nRows, nCols;
 
     template <class Archive>
     void serialize(Archive & ar)
     {
         ar(CEREAL_NVP(path));
+        ar(CEREAL_NVP(nRows)); ar(CEREAL_NVP(nCols));
     }
 };
 
@@ -47,8 +49,9 @@ class LRE3AssetManager
 public:
     void Clear();
 
-    void AddTexturePath(std::string name, std::string texturePath);
-    void LoadTexture(std::string name, std::string texturePath);
+    void AddTexturePath(std::string name, std::string texturePath, unsigned int nRows = 1, unsigned int nCols = 1);
+    void LoadTexture(std::string name, std::string texturePath, unsigned int nRows = 1, unsigned int nCols = 1);
+    void SetTextureAtlasSize(std::string name, unsigned int nRows, unsigned int nCols);
     LRE3Texture* GetTexture(std::string name);
 
     void AddShaderPath(std::string name, std::string vertexShaderPath, std::string fragmentShaderPath);
@@ -58,7 +61,7 @@ public:
     /*
     *  Textures and shaders can also be added lazily, and loaded on demand
     */
-    std::map<std::string, LRE3AssetPath> m_texturesPaths;
+    std::map<std::string, LRE3TexturePath> m_texturesPaths;
     std::map<std::string, LRE3ShaderPath> m_shadersPaths;
 
     std::map<std::string, LRE3Shader> m_shaders;
