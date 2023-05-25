@@ -73,7 +73,7 @@ void LRE3SpriteRenderer::DrawTextureSprite(LRE3Shader* shader, LRE3Texture* text
 }
 
 void LRE3SpriteRenderer::DrawTextureAtlas(LRE3Shader* shader, LRE3Texture* texture, 
-        std::vector<unsigned int> tiles, unsigned int nRows, unsigned int nCols,
+        std::vector<int> tiles, unsigned int nRows, unsigned int nCols,
         glm::mat3 modelMatrix, glm::vec4 color, float depth)
 {
     shader->Use();
@@ -93,9 +93,15 @@ void LRE3SpriteRenderer::DrawTextureAtlas(LRE3Shader* shader, LRE3Texture* textu
     for (int i = 0; i < nRows; i++)
     for (int j = 0; j < nCols; j++)
     {
-        unsigned int tile = tiles[j + i * nRows];
-        shader->Uniform("tileRow", tile / (GLuint)texture->GetAtlasCols());
-        shader->Uniform("tileCol", tile % (GLuint)texture->GetAtlasCols());
+        int tile = tiles[j + i * nRows];
+        int tileRow = -1, tileCol = -1;
+        if (tile >= 0)
+        {
+            tileRow = tile / (GLuint)texture->GetAtlasCols();
+            tileCol = tile % (GLuint)texture->GetAtlasCols();
+        }
+        shader->Uniform("tileRow", (GLuint)tileRow);
+        shader->Uniform("tileCol", (GLuint)tileCol);
         shader->Uniform("deltaRow", (GLuint)i);
         shader->Uniform("deltaCol", (GLuint)j);
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_BYTE, NULL);

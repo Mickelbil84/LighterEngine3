@@ -15,6 +15,7 @@ out vec4 fragColor;
 void main()
 {
     vec2 uv = texCoord;
+    if ((tileCol < 0) || (tileRow < 0)) discard;
     uv.x = (uv.x + tileCol) / textureCols;
     uv.y = (uv.y + tileRow) / textureRows;
 

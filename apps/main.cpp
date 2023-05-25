@@ -50,9 +50,9 @@ public:
 
         LRE3GetSpriteRenderer().DrawTextureAtlas(
             scene.assets.GetShader("S_base"), scene.assets.GetTexture("T_demo_tilesheet"), 
-            std::vector<unsigned int>({
+            std::vector<int>({
                 49, 50, 51, 52,
-                49, 50, 51, 52,
+                49, -1, 51, 52,
                 49, 50, 51, 52,
                 49, 50, 51, 52}),
             4, 4);

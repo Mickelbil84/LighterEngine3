@@ -19,7 +19,7 @@ public:
         glm::mat3 modelMatrix=glm::mat3(1.f), glm::vec4 color=glm::vec4(1.f), float depth=0.f);
     
     void DrawTextureAtlas(LRE3Shader* shader, LRE3Texture* texture, 
-        std::vector<unsigned int> tiles, unsigned int nRows, unsigned int nCols,
+        std::vector<int> tiles, unsigned int nRows, unsigned int nCols,
         glm::mat3 modelMatrix=glm::mat3(1.f), glm::vec4 color=glm::vec4(1.f), float depth=0.f
     );
 
