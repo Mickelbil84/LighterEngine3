@@ -3,8 +3,11 @@
 LRE3SpriteObject::LRE3SpriteObject(std::string name) :
     LRE3Object(name),
     m_pTexture(nullptr),
-    m_color(glm::vec4(1.f))
+    m_color(glm::vec4(1.f)),
+    m_nRows(1), m_nCols(1),
+    m_bFilpHorizontal(false), m_bFlipVertical(false)
 {
+    m_tiles.push_back(0);
 }
 
 std::shared_ptr<LRE3Object> LRE3SpriteObject::Duplicate(std::string newName)
@@ -18,7 +21,7 @@ std::shared_ptr<LRE3Object> LRE3SpriteObject::Duplicate(std::string newName)
 
 void LRE3SpriteObject::Draw()
 {
-    LRE3EngineSubsystems::Instance().GetSpriteRenderer().DrawTextureSprite(m_pShader, m_pTexture, GetModelMatrix(), m_color, m_depth);
+    LRE3GetSpriteRenderer().DrawTextureAtlas(m_pShader, m_pTexture, m_tiles, m_nRows, m_nCols, GetModelMatrix(), m_color, GetDepth(), m_bFilpHorizontal, m_bFlipVertical);
 }
 
 void LRE3SpriteObject::SetTexture(LRE3Texture* texture)
@@ -28,4 +31,13 @@ void LRE3SpriteObject::SetTexture(LRE3Texture* texture)
 void LRE3SpriteObject::SetShader(LRE3Shader* shader)
 {
     m_pShader = shader;
+}
+
+void LRE3SpriteObject::SetTileShape(unsigned int nRows, unsigned int nCols)
+{
+    m_nRows = nRows; m_nCols = nCols;
+    m_tiles.clear();
+    for (int i = 0; i < m_nRows; i++)
+    for (int j = 0; j < m_nCols; j++)
+        m_tiles.push_back(-1);
 }

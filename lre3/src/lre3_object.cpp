@@ -186,5 +186,7 @@ void LRE3Object::SetDepth(float depth)
 }
 float LRE3Object::GetDepth() const
 {
-    return m_depth;
+    float depth = m_depth;
+    if (m_pParent) depth += m_pParent->GetDepth();
+    return depth;
 }

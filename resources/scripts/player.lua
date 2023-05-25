@@ -1,23 +1,28 @@
+local AnimatedSprite = require "animated_sprite"
+
 local Player = {}
 
 function Player:new(name, shader, texture)
-    local p = scene:add_sprite(name, shader, texture)
-    p.speed = 1.0
-    p.update = self.update
+    local o = scene:add_object(name)
+    o.sprite = AnimatedSprite:new(name .. "_sprite", shader, texture)
+    scene:reparent(o.sprite, o)
+    o.speed = 1.0
+    o.dx = 0.0; o.dy = 0.0;
+    o.update = self.update
 
-    p.frame_cnt = 0
-    p.frame_time = 0
-    return p
+    o.frame_cnt = 0
+    o.frame_time = 0
+    return o
 end
 
 function Player:update(delta_time)
     local input = LRE3Input:get_input()
-    local dx = 0.0; local dy = 0.0
-    if input:get_keystate(SCANCODE_D) then dx = dx + self.speed * delta_time end
-    if input:get_keystate(SCANCODE_A) then dx = dx - self.speed * delta_time end
-    if input:get_keystate(SCANCODE_W) then dy = dy + self.speed * delta_time end
-    if input:get_keystate(SCANCODE_S) then dy = dy - self.speed * delta_time end
-    self:add_position(dx, dy)
+    self.dx, self.dy = 0, 0
+    if input:get_keystate(SCANCODE_D) then self.dx = self.dx + self.speed * delta_time end
+    if input:get_keystate(SCANCODE_A) then self.dx = self.dx - self.speed * delta_time end
+    if input:get_keystate(SCANCODE_W) then self.dy = self.dy + self.speed * delta_time end
+    if input:get_keystate(SCANCODE_S) then self.dy = self.dy - self.speed * delta_time end
+    self:add_position(self.dx, self.dy)
 
     self.frame_cnt = self.frame_cnt + 1
     self.frame_time = self.frame_time + delta_time

@@ -189,6 +189,7 @@ void LRE3SceneManager::UpdateSceneGraph()
             parent = objectPool[parentName];
         obj->Reparent(parent.get());
     }
+    ReorderObjectsByDepth();
 }
 void LRE3SceneManager::UpdateAssets()
 {

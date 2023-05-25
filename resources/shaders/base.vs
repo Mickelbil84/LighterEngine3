@@ -10,6 +10,7 @@ uniform mat3 projection;
 
 uniform int deltaRow, deltaCol;
 uniform int spriteRows, spriteCols;
+uniform bool flipHorizontal, flipVertical;
 
 uniform vec2 position;
 uniform vec2 dimensions;
@@ -18,6 +19,8 @@ uniform float depth;
 void main()
 {
     vec2 deltaPos = vPosition;
+    if (flipHorizontal) deltaPos.x = 1.0 - deltaPos.x;
+    if (flipVertical) deltaPos.y = 1.0 - deltaPos.y;
     deltaPos.x = (deltaPos.x + deltaCol) / spriteCols;
     deltaPos.y = (deltaPos.y + deltaRow) / spriteRows;
     vec3 pos = projection * view * model * vec3(deltaPos, 1.0);
