@@ -16,7 +16,7 @@ public:
     LRE3SpriteRenderer& GetSpriteRenderer() { return m_spriteRenderer; }
     LRE3ScriptSystem& GetScriptSystem() { return m_scriptSystem; }
 
-    double deltaTime;
+    double deltaTime, runTime;
     LRE3Input input;
 
 
@@ -32,3 +32,5 @@ private:
 #define GetEngine LRE3EngineSubsystems::Instance
 #define LRE3GetSpriteRenderer LRE3EngineSubsystems::Instance().GetSpriteRenderer
 #define LRE3GetScriptSystem LRE3EngineSubsystems::Instance().GetScriptSystem
+#define GetRunTime() LRE3EngineSubsystems::Instance().runTime
+#define GetDeltaTime() LRE3EngineSubsystems::Instance().deltaTime

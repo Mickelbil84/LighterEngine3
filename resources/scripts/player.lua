@@ -1,10 +1,8 @@
-local AnimatedSprite = require "animated_sprite"
-
 local Player = {}
 
 function Player:new(name, shader, texture)
     local o = scene:add_object(name)
-    o.sprite = AnimatedSprite:new(name .. "_sprite", shader, texture)
+    o.sprite = scene:add_animated_sprite(name .. "_sprite", shader, texture)
     scene:reparent(o.sprite, o)
     o.speed = 1.0
     o.dx = 0.0; o.dy = 0.0;

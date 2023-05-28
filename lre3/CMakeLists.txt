@@ -27,6 +27,7 @@ add_library(lre3
     src/lre3_scene_root.cpp
     src/lre3_camera.cpp
     src/lre3_sprite_object.cpp
+    src/lre3_animated_sprite.cpp
 
     src/lre3_engine_subsystems.cpp
     src/lre3_sprite_renderer.cpp
@@ -45,6 +46,7 @@ add_library(lre3
     src/bindings/lre3_shader_binding.cpp
     src/bindings/lre3_sprite_object_binding.cpp
     src/bindings/lre3_texture_binding.cpp
+    src/bindings/lre3_animated_sprite_binding.cpp
 )
 
 target_include_directories(${PROJECT_NAME} PUBLIC ${PROJECT_SOURCE_DIR}/include)

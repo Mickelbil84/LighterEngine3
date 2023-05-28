@@ -28,6 +28,17 @@ FBIND(LRE3SceneManager, AddSprite)
     PUSH_UDATA(self->GetObject(name).get(), LRE3SpriteObject);
     return 1;
 }
+FBIND(LRE3SceneManager, AddAnimatedSprite)
+{
+    GET_SELF(LRE3SceneManager);
+    GET_STRING(name, 2);
+    GET_STRING(shader, 3);
+    GET_STRING(texture, 4);
+    GET_STRING_OR_NIL(parent, 5);
+    self->AddAnimatedSprite(name, shader, texture, parent);
+    PUSH_UDATA(self->GetObject(name).get(), LRE3AnimatedSprite);
+    return 1;
+}
 
 FBIND(LRE3SceneManager, DeleteObject)
 {
@@ -95,6 +106,7 @@ FBIND(LRE3SceneManager, GetObject)
 LIB(LRE3SceneManager) = {
     {"add_object", FNAME(LRE3SceneManager, AddObject)},
     {"add_sprite", FNAME(LRE3SceneManager, AddSprite)},
+    {"add_animated_sprite", FNAME(LRE3SceneManager, AddAnimatedSprite)},
 
     {"delete_object", FNAME(LRE3SceneManager, DeleteObject)},
     {"duplicate_object", FNAME(LRE3SceneManager, DuplicateObject)},

@@ -2,27 +2,24 @@ local LRE3Input = require 'LRE3Input'
 
 local assets = scene:get_assets()
 assets:load_shader("S_base", "resources/shaders/base.vs", "resources/shaders/base.fs")
-assets:load_texture("T_penguin", "resources/textures/animals/penguin.png")
-assets:load_texture("T_giraffe", "resources/textures/animals/giraffe.png")
 
-assets:load_texture("T_knight", "resources/textures/knight.png")
-assets:set_texture_atlas_size("T_knight", 2, 6)
+assets:load_texture("T_spritesheet", "resources/textures/dungeon/spritesheet.png")
+assets:set_texture_atlas_size("T_spritesheet", 9, 28)
 
-assets:load_texture("T_demo_tilesheet", "resources/textures/demo_tilesheet.png")
-assets:set_texture_atlas_size("T_demo_tilesheet", 22, 49)
+assets:load_texture("T_tilemap", "resources/textures/dungeon/tilemap.png")
+assets:set_texture_atlas_size("T_tilemap", 8, 9)
 
-scene:get_camera():set_zoom(0.37)
+scene:get_camera():set_zoom(0.7)
 -----
 
 local Player = require 'Player'
-local player = Player:new('knight', 'S_base', 'T_knight')
+local player = Player:new('knight', 'S_base', 'T_spritesheet')
 player.speed = 4.0
 player:set_position(-1, -1)
-player:set_scale(0.2, 0.2)
+player:set_scale(0.15, 0.15)
 player:set_depth(1.0)
-print(player.sprite.add_animation)
-player.sprite:add_animation("idle", 0, 5, 10)
-player.sprite:add_animation("run", 6, 11, 16)
+player.sprite:add_animation("idle", 140, 6, 10)
+player.sprite:add_animation("run", 168, 6, 16)
 player.sprite:set_animation("idle")
 
 player.original_update = player.update
@@ -31,21 +28,36 @@ function player:update(delta_time)
     
     -- Set animation
     if ((self.dx ~= 0) or (self.dy ~= 0)) then self.sprite:set_animation("run") 
-    else self.sprite:set_animation("idle"); print(self.sprite.curr_animation) end 
+    else self.sprite:set_animation("idle") end 
 
     -- Set horizontal flip
     if (self.dx < 0) then self.sprite:set_flip_horizontal(true) end
     if (self.dx > 0) then self.sprite:set_flip_horizontal(false) end
-
     
 end
 
 ------------------
 
-local tiledemo = scene:add_sprite('tiledemo', 'S_base', 'T_demo_tilesheet')
+local tiledemo = scene:add_sprite('tiledemo', 'S_base', 'T_tilemap')
+
+local tile_floor <const> = 11
+
 tiles = {}
-rows = 9; cols = 8;
+rows = 40; cols = 40;
 for i=1,(rows * cols) do 
-    tiles[i] = math.random(0, 60)
+    tiles[i] = tile_floor
 end
 tiledemo:set_tiles_from_table(rows, cols, tiles)
+tiledemo:set_position(-0.5,-0.5)
+tiledemo:set_scale(5, 5)
+
+local pooltable = scene:add_sprite('pooltable', 'S_base', 'T_tilemap')
+pooltable:set_scale(0.3, 0.15)
+pooltable:set_tiles_from_table(1, 2, {9, 10})
+pooltable:set_depth(0.5)
+
+local test = scene:add_animated_sprite('test', 'S_base', 'T_spritesheet')
+test:set_depth(0.9)
+test:add_animation("idle", 140, 6, 16)
+test:add_animation("run", 168, 6, 8)
+test:set_animation("run")

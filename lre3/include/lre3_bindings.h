@@ -11,6 +11,7 @@
 #include "lre3_shader.h"
 #include "lre3_sprite_object.h"
 #include "lre3_texture.h"
+#include "lre3_animated_sprite.h"
 
 
 // Binding macros, for shorter code
@@ -61,3 +62,4 @@ LOPEN_DECLARE(LRE3SceneRoot);
 LOPEN_DECLARE(LRE3Shader);
 LOPEN_DECLARE(LRE3SpriteObject);
 LOPEN_DECLARE(LRE3Texture);
+LOPEN_DECLARE(LRE3AnimatedSprite);

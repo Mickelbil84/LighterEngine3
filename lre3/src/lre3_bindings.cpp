@@ -16,4 +16,5 @@ void LRE3Bind()
     REGISTER_OOP(LRE3Camera, LRE3Object);
     REGISTER_OOP(LRE3SceneRoot, LRE3Object);
     REGISTER_OOP(LRE3SpriteObject, LRE3Object);
+    REGISTER_OOP(LRE3AnimatedSprite, LRE3SpriteObject);
 }
