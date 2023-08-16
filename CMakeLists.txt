@@ -16,6 +16,7 @@ project(
 
 add_subdirectory(lre3)
 add_subdirectory(apps)
+add_subdirectory(editor)
 
 # Copy the resources directory to the build
 if (WIN32)

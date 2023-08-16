@@ -27,6 +27,7 @@ public:
     
     void Init();
     void Render();
+    void Render(int width, int height);
     void Clear();
 
     void AddCamera(glm::vec2 position = glm::vec2(0.f));

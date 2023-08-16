@@ -33,6 +33,10 @@ void LRE3SceneManager::Init()
 }
 void LRE3SceneManager::Render()
 {
+    this->Render(applicationSettings->windowWidth, applicationSettings->windowHeight);
+}
+void LRE3SceneManager::Render(int width, int height)
+{
     for (const auto& [key, value] : assets.m_shaders)
     {
         LRE3Shader* shader = assets.GetShader(key);
@@ -40,12 +44,11 @@ void LRE3SceneManager::Render()
         shader->Uniform("view", GetCamera()->GetViewMatrix());
         shader->Uniform("projection", GetCamera()->GetProjectionMatrix());
     }
-    glViewport(0, 0, applicationSettings->windowWidth, applicationSettings->windowHeight);
+    glViewport(0, 0, width, height);
     // GetRoot()->Draw();
     
     // For 2D, render by depth
     for (auto obj : renderPool) obj->Draw();
-
 }
 void LRE3SceneManager::Clear()
 {
