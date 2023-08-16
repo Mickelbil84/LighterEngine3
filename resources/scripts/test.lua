@@ -58,6 +58,15 @@ pooltable:set_depth(0.5)
 
 local test = scene:add_animated_sprite('test', 'S_base', 'T_spritesheet')
 test:set_depth(0.9)
+test:set_scale(0.3, 0.3)
 test:add_animation("idle", 140, 6, 16)
 test:add_animation("run", 168, 6, 8)
 test:set_animation("run")
+test:add_position(0, 0.7)
+test.speed = 3.0
+function test:update(delta_time)
+    x, y = self:get_position()
+    x = x + self.speed * delta_time
+    if x > 6 then x = -6 end
+    self:set_position(x, y)
+end
